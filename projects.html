@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projects Gallery</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #181c1f 0%, #232526 100%);
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+        }
+
+        .open-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+            z-index: 20;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: color 0.2s;
+        }
+
+            .open-btn:hover {
+                color: #04AA6D;
+            }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            padding: 80px 20px 40px 20px;
+            min-height: 100vh;
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
+            color: #fff;
+            width: 320px;
+            min-height: 220px;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 32px 28px 28px 28px;
+            transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s, filter 0.3s;
+            cursor: pointer;
+            position: relative;
+            perspective: 600px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            animation: fadeInUp 0.7s cubic-bezier(.25,.8,.25,1) both;
+            z-index: 1;
+            overflow: visible;
+        }
+
+            /* Remove the old ::before glow */
+            .project-card::before {
+                display: none !important;
+            }
+
+            /* New macOS-style animated border on hover/focus */
+            .project-card::after {
+                content: "";
+                position: absolute;
+                inset: -3px;
+                border-radius: 22px;
+                z-index: 2;
+                pointer-events: none;
+                opacity: 0;
+                transition: opacity 0.3s;
+                border: 2.5px solid transparent;
+                background: linear-gradient(270deg, #ff5f6d, #ffc371, #47cf73, #1fa2ff, #a259c4, #ff5f6d );
+                background-size: 400% 400%;
+                animation: borderFlow 4s linear infinite;
+                -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+                -webkit-mask-composite: xor;
+                mask-composite: exclude;
+            }
+
+            .project-card:hover::after,
+            .project-card:focus::after {
+                opacity: 1;
+            }
+
+            .project-card:hover,
+            .project-card:focus {
+                transform: translateY(-12px) scale(1.045) rotateY(8deg);
+                box-shadow: 0 16px 48px 0 #04AA6D44, 0 16px 40px 0 rgba(0,0,0,0.45);
+                z-index: 2;
+                outline: none;
+            }
+
+        @keyframes borderFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+
+
+        .project-title,
+        .project-desc,
+        .project-link {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .project-desc {
+            font-size: 1rem;
+            opacity: 0.85;
+            margin-bottom: 18px;
+        }
+
+        .project-link {
+            margin-top: auto;
+            color: #04AA6D;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+            .project-link:hover {
+                color: #fff;
+                text-decoration: underline;
+            }
+
+        @media (max-width: 900px) {
+            .gallery-container {
+                gap: 24px;
+            }
+
+            .project-card {
+                width: 90vw;
+                max-width: 340px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 40px, 0);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        @keyframes borderAnim {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            100% {
+                background-position: 100% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="open-btn" href="index.html" title="Back to Home">AS</a>
+    <div class="gallery-container">
+        <a class="project-card" href="#" target="_blank">
+            <div class="project-title">Project One</div>
+            <div class="project-desc">Description for Project.</div>
+            <span class="project-link">View Project</span>
+        </a>
+        <a class="project-card" href="#" target="_blank">
+            <div class="project-title">Project Two</div>
+            <div class="project-desc">Description for Project.</div>
+            <span class="project-link">View Project</span>
+        </a>
+        <a class="project-card" href="#" target="_blank">
+            <div class="project-title">Project Three</div>
+            <div class="project-desc">Description for Project.</div>
+            <span class="project-link">View Project</span>
+        </a>
+        <a class="project-card" href="#" target="_blank">
+            <div class="project-title">Project Four</div>
+            <div class="project-desc">Description for Project.</div>
+            <span class="project-link">View Project</span>
+        </a>
+        <!-- Add more project cards as needed -->
+    </div>
+</body>
+</html>

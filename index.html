@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        body {
+            margin: 0;
+            background: #111;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        .footer {
+            width: 100%;
+            background: rgba(0,0,0,0.85);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0 4px 0;
+            position: relative;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+            flex-wrap: wrap;
+        }
+
+        .footer-spacer {
+            flex: 1 1 0;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
+            flex: 1 1 0;
+        }
+
+        .footer-right {
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            opacity: 0.85;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 1 1 0;
+            margin: 0 18px 0 0;
+        }
+
+        .footer-icon {
+            width: 22px;
+            height: 22px;
+            color: #fff;
+            opacity: 0.95;
+            transition: opacity 0.2s, transform 0.2s, color 0.2s;
+        }
+
+        .footer a:hover .footer-icon,
+        .footer a:focus .footer-icon {
+            opacity: 1;
+            transform: scale(1.15);
+            color: #04AA6D;
+        }
+
+        @media (max-width: 700px) {
+            .footer {
+                flex-direction: column;
+                gap: 6px;
+                padding: 8px 0 4px 0;
+            }
+
+            .footer-icons {
+                gap: 10px;
+            }
+
+            .footer-icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .footer-right {
+                margin: 0;
+                font-size: 0.8rem;
+                justify-content: center;
+            }
+
+            .footer-spacer {
+                display: none;
+            }
+        }
+
+        .text-stack {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90vw;
+            max-width: 700px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        /* Image 2: middle right */
+        .img2 .text-stack {
+            left: 75%;
+            transform: translate(-50%, -50%);
+            align-items: flex-end;
+            text-align: right;
+        }
+
+        /* Image 3: middle left */
+        .img3 .text-stack {
+            left: 25%;
+            transform: translate(-50%, -50%);
+            align-items: flex-start;
+            text-align: left;
+        }
+
+        @media (max-width: 700px) {
+            .animated-text {
+                font-size: 1.2rem;
+            }
+
+            .animated-text-secondary {
+                font-size: 1rem;
+            }
+
+            .text-stack {
+                max-width: 98vw;
+            }
+        }
+        .animated-text,
+        .animated-text-secondary {
+            position: static;
+            opacity: 0;
+            transition: opacity 1.5s;
+            width: 100%;
+            text-align: center;
+            background: none;
+            word-break: break-word;
+            font-size: 2rem;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 0 2px #000;
+            padding: 0 12px;
+            margin: 0;
+        }
+        .animated-text-secondary {
+            font-size: 1.2rem;
+            font-weight: normal;
+            margin-top: 1em;
+        }
+
+        .bg-image.show-text .animated-text,
+        .bg-image.show-text .animated-text-secondary {
+            opacity: 1;
+        }
+        body {
+            margin: 0;
+            font-size: 28px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .bg-image {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-container-img1 {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(200,200,200,0.4);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .progress-bar-img1 {
+            height: 8px;
+            background: #fff;
+            width: 0%;
+            transition: width 0.2s;
+        }
+
+        .progress-container-img1.visible {
+            opacity: 1;
+        }
+            .bg-image::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), inherit; /* fallback, will be overridden by .img1/.img2 */
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                z-index: 0;
+                transition: filter 0.5s;
+            }
+
+        .img1::before {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1749071387298-07d621776a73?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .img2::before {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1587671729035-031d0e370d0d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+
+        .img3::before {
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1593955654387-9dcbc8ef8071?q=80&w=2110&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+        }
+        .bg-image.blur::before {
+            filter: blur(0.7px);
+        }
+
+        .bg-image.show-text .animated-text {
+            opacity: 1;
+        }
+
+        .open-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+            z-index: 2;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 0;
+        }
+        body.overlay-open .bg-image .text-stack,
+        body.overlay-open .bg-image .animated-text,
+        body.overlay-open .bg-image .animated-text-secondary {
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0, 0.9);
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 25%;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .overlay a {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 36px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+            .overlay a:hover, .overlay a:focus {
+                color: #f1f1f1;
+            }
+
+        .overlay .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 60px;
+        }
+
+        @media screen and (max-height: 450px) {
+            .overlay a {
+                font-size: 20px
+            }
+
+            .overlay .closebtn {
+                font-size: 40px;
+                top: 15px;
+                right: 35px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Popup Overlay Warning -->
+    <div id="devWarningOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="background:rgba(30,30,30,0.98);padding:36px 28px 24px 28px;border-radius:18px;box-shadow:0 4px 32px #000a;display:flex;flex-direction:column;align-items:center;max-width:90vw;">
+            <div style="font-size:64px;color:#ffcc00;margin-bottom:18px;">
+                &#9888;
+            </div>
+            <div style="color:#fff;font-size:1.5rem;text-align:center;margin-bottom:24px;">
+                This page is under Dev
+            </div>
+            <button id="devWarningOkBtn" style="padding:10px 32px;font-size:1.1rem;border:none;border-radius:6px;background:#ffcc00;color:#222;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0004;">
+                OK
+            </button>
+        </div>
+    </div>
+    <button class="open-btn" onclick="openNav()">AS</button>
+    <div class="progress-container-img1" id="stickyProgress">
+        <div class="progress-bar-img1" id="img1Bar"></div>
+    </div>
+
+    <div class="bg-image img1">
+        <div class="text-stack">
+            <span class="animated-text">Under Dev!</span>
+            <span class="animated-text-secondary">Under Dev.</span>
+        </div>
+    </div>
+    <div class="bg-image img2">
+        <div class="text-stack">
+            <span class="animated-text">Under Dev!</span>
+            <span class="animated-text-secondary">Under Dev.</span>
+        </div>
+    </div>
+    <div class="bg-image img3">
+        <div class="text-stack">
+            <span class="animated-text">Under Dev!</span>
+            <span class="animated-text-secondary">Under Dev.</span>
+        </div>
+    </div>
+
+    <div id="myNav" class="overlay">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <div class="overlay-content">
+            <a href="sports.html">Sports</a>
+            <a href="projects.html">Projects</a>
+            <a href="photo.html">Photography</a>
+            <a href="contact.html">About Me</a>
+        </div>
+    </div>
+    <script>
+        function updatePageProgressBar() {
+            var barContainer = document.getElementById('stickyProgress');
+            var bar = document.getElementById('img1Bar');
+            var img1 = document.querySelector('.img1');
+            var rect = img1.getBoundingClientRect();
+
+            // Calculate page scroll progress
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+
+            // Show bar only after scrolling past the top of img1
+            if (rect.top < 0) {
+                barContainer.classList.add('visible');
+                bar.style.width = scrolled + "%";
+            } else {
+                barContainer.classList.remove('visible');
+                bar.style.width = "0%";
+            }
+        }
+        window.addEventListener('scroll', updatePageProgressBar);
+        window.addEventListener('resize', updatePageProgressBar);
+        window.addEventListener('DOMContentLoaded', updatePageProgressBar);
+
+        function openNav() {
+            document.getElementById("myNav").style.width = "100%";
+            document.body.classList.add("overlay-open");
+        }
+        function closeNav() {
+            document.getElementById("myNav").style.width = "0%";
+            document.body.classList.remove("overlay-open");
+        }
+
+
+        function getMostVisibleImage(images) {
+            let minDist = Infinity;
+            let mostVisible = null;
+            const viewportCenter = window.innerHeight / 2;
+            images.forEach(function (imgDiv) {
+                const rect = imgDiv.getBoundingClientRect();
+                const imgCenter = rect.top + rect.height / 2;
+                const dist = Math.abs(imgCenter - viewportCenter);
+                if (
+                    rect.top < window.innerHeight &&
+                    rect.bottom > 0 &&
+                    dist < minDist
+                ) {
+                    minDist = dist;
+                    mostVisible = imgDiv;
+                }
+            });
+            return mostVisible;
+        }
+
+        function handleScroll() {
+            const images = Array.from(document.querySelectorAll('.bg-image'));
+            const mostVisible = getMostVisibleImage(images);
+
+            images.forEach(function (imgDiv) {
+                if (imgDiv === mostVisible) {
+                    imgDiv.classList.add('show-text', 'blur');
+                } else {
+                    imgDiv.classList.remove('show-text', 'blur');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleScroll);
+        window.addEventListener('DOMContentLoaded', handleScroll);
+        window.addEventListener('DOMContentLoaded', function () {
+            if (!sessionStorage.getItem('devWarningShown')) {
+                document.body.style.overflow = 'hidden';
+                document.getElementById('devWarningOverlay').style.display = 'flex';
+            } else {
+                document.getElementById('devWarningOverlay').style.display = 'none';
+            }
+        });
+
+        document.getElementById('devWarningOkBtn').onclick = function () {
+            document.getElementById('devWarningOverlay').style.display = 'none';
+            document.body.style.overflow = '';
+            sessionStorage.setItem('devWarningShown', '1');
+        };
+    </script>
+
+
+
+    <footer class="footer">
+        <div class="footer-spacer"></div>
+        <div class="footer-icons">
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+                <svg class="footer-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5zm4.25 3.25a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25.75a1 1 0 1 1 0 2a1 1 0 0 1 0-2z" /></svg>
+            </a>
+            <a href="https://unsplash.com" target="_blank" aria-label="Unsplash">
+                <svg class="footer-icon" viewBox="0 0 32 32"><path fill="currentColor" d="M10 12V4h12v8h8v16H2V12zm2-6v6h8V6zm16 8H4v12h24z" /></svg>
+            </a>
+            <a href="https://github.com" target="_blank" aria-label="GitHub">
+                <svg class="footer-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504c.5.092.682-.217.682-.482c0-.237-.009-.868-.014-1.703c-2.782.605-3.369-1.342-3.369-1.342c-.454-1.154-1.11-1.462-1.11-1.462c-.908-.62.069-.608.069-.608c1.004.07 1.532 1.032 1.532 1.032c.892 1.53 2.341 1.088 2.91.832c.092-.647.35-1.088.636-1.339c-2.221-.253-4.555-1.113-4.555-4.951c0-1.093.39-1.988 1.029-2.688c-.103-.253-.446-1.272.098-2.65c0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337c1.909-1.295 2.748-1.025 2.748-1.025c.546 1.378.202 2.397.1 2.65c.64.7 1.028 1.595 1.028 2.688c0 3.847-2.337 4.695-4.566 4.944c.359.309.678.919.678 1.852c0 1.336-.012 2.415-.012 2.744c0 .268.18.579.688.48A10.025 10.025 0 0 0 22 12.021C22 6.484 17.523 2 12 2z" /></svg>
+            </a>
+            <a href="https://www.fitbit.com" target="_blank" aria-label="Fitbit">
+                <svg class="footer-icon" viewBox="0 0 48 48"><circle cx="24" cy="24" r="4" fill="currentColor" /><circle cx="24" cy="12" r="2.5" fill="currentColor" /><circle cx="24" cy="36" r="2.5" fill="currentColor" /><circle cx="12" cy="24" r="2.5" fill="currentColor" /><circle cx="36" cy="24" r="2.5" fill="currentColor" /><circle cx="16.5" cy="16.5" r="2" fill="currentColor" /><circle cx="31.5" cy="16.5" r="2" fill="currentColor" /><circle cx="16.5" cy="31.5" r="2" fill="currentColor" /><circle cx="31.5" cy="31.5" r="2" fill="currentColor" /></svg>
+            </a>
+        </div>
+        <div class="footer-right">
+            AS &copy; 2025
+        </div>
+    </footer>
+</body>
+</html>

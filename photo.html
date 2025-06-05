@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            background: #111;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .open-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+            z-index: 1001;
+            text-decoration: none;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: color 0.2s;
+        }
+
+            .open-btn:hover {
+                color: #04AA6D;
+            }
+
+        /* Side menu styles */
+        .side-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            transition: background 0.3s;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 260px;
+            background: #181818;
+            box-shadow: 2px 0 16px rgba(0,0,0,0.25);
+            z-index: 1001;
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+            padding: 40px 0 0 0;
+        }
+
+            .side-menu.open {
+                transform: translateX(0);
+            }
+
+        .side-menu-overlay.open {
+            display: block;
+        }
+
+        .side-menu .close-btn {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            font-size: 32px;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1002;
+        }
+
+        .side-menu nav {
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+            gap: 18px;
+            padding-left: 32px;
+        }
+
+            .side-menu nav a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 1.2rem;
+                font-weight: bold;
+                letter-spacing: 1px;
+                transition: color 0.2s;
+            }
+
+                .side-menu nav a:hover {
+                    color: #04AA6D;
+                }
+
+        .gallery {
+            column-count: 3;
+            column-gap: 24px;
+            padding: 100px 16px 40px 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-photo {
+            background: #222;
+            border: 2px solid #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+            margin-bottom: 24px;
+            display: block;
+            break-inside: avoid;
+            position: relative;
+            padding: 0;
+        }
+
+            .gallery-photo img {
+                width: 100%;
+                height: auto;
+                display: block;
+                object-fit: contain;
+                background: #222;
+                cursor: zoom-in;
+            }
+
+        @media (max-width: 1000px) {
+            .gallery {
+                column-count: 2;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .gallery {
+                column-count: 1;
+                padding: 80px 4vw 24px 4vw;
+                gap: 0;
+            }
+
+            .gallery-photo {
+                border-radius: 6px;
+            }
+        }
+
+        .img-magnifier-glass {
+            position: absolute;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            cursor: none;
+            width: 100px;
+            height: 100px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+            z-index: 10;
+            background-repeat: no-repeat;
+            background-color: rgba(34,34,34,0.1);
+            pointer-events: none;
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+            .gallery {
+                gap: 12px;
+                padding: 80px 4vw 24px 4vw;
+            }
+
+            .gallery-photo {
+                border-radius: 6px;
+            }
+
+            .side-menu {
+                width: 80vw;
+                min-width: 180px;
+                max-width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="open-btn" id="openMenuBtn" title="Open Menu">AS</button>
+    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
+    <aside class="side-menu" id="sideMenu">
+        <button class="close-btn" id="closeMenuBtn" title="Close Menu">&times;</button>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="#" id="videoLink">Photoshop Tutorials</a>
+        </nav>
+    </aside>
+    <div class="gallery">
+        <a class="gallery-photo" href="https://unsplash.com/photos/-uRO13NVIvY" target="_blank">
+            <img id="img1" src="https://images.unsplash.com/photo-1748904434534-6c61b9ba409a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mzh8fHxlbnwwfHx8fHw%3D" alt="Sample 1">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/KJmt0lkBeCo" target="_blank">
+            <img id="img2" src="https://images.unsplash.com/photo-1749072532613-7bb1f0271a33?q=80&w=1914&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 2">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/sGQZ0DPobQE" target="_blank">
+            <img id="img3" src="https://images.unsplash.com/photo-1749071387246-92e125fd11da?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 3">
+        </a>
+        <div style="column-span: all; width:100%; text-align:center; margin: 32px 0 16px 0; color:#04AA6D; font-size:1.2rem; font-weight:bold;">
+            Under Dev, more coming here
+        </div>
+        <!-- Add more images as needed -->
+    </div>
+        <!--
+
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img4" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
+    </a>
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img5" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Sample 3">
+    </a>
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img6" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
+    </a>
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img7" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Sample 3">
+    </a>
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img8" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
+    </a>
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img9" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Sample 3">
+    </a>
+    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
+        <img id="img10" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
+    </a>
+    <!-- Add more images as needed -->
+       
+   
+    <script>
+        // Wait for all images to load before initializing magnifier
+        function onImagesLoaded(container, callback) {
+            const images = container.querySelectorAll('img');
+            let loaded = 0;
+            const total = images.length;
+            if (total === 0) callback();
+            images.forEach(function (img) {
+                if (img.complete) {
+                    loaded++;
+                    if (loaded === total) callback();
+                } else {
+                    img.addEventListener('load', function () {
+                        loaded++;
+                        if (loaded === total) callback();
+                    });
+                    img.addEventListener('error', function () {
+                        loaded++;
+                        if (loaded === total) callback();
+                    });
+                }
+            });
+        }
+
+        function magnify(img, zoom) {
+            let glass = document.createElement("DIV");
+            glass.setAttribute("class", "img-magnifier-glass");
+            img.parentElement.appendChild(glass);
+
+            const glassSize = 100;
+            const bw = 2;
+            const w = glassSize / 2;
+            const h = glassSize / 2;
+
+            glass.style.width = glassSize + "px";
+            glass.style.height = glassSize + "px";
+            glass.style.backgroundImage = "url('" + img.src + "')";
+            glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
+
+            function moveMagnifier(e) {
+                let pos = getCursorPos(e);
+                let x = pos.x;
+                let y = pos.y;
+                if (x > img.width - (w / zoom)) { x = img.width - (w / zoom); }
+                if (x < w / zoom) { x = w / zoom; }
+                if (y > img.height - (h / zoom)) { y = img.height - (h / zoom); }
+                if (y < h / zoom) { y = h / zoom; }
+                glass.style.left = (x - w) + "px";
+                glass.style.top = (y - h) + "px";
+                glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+            }
+            function getCursorPos(e) {
+                let a = img.getBoundingClientRect();
+                let x = e.pageX - a.left - window.pageXOffset;
+                let y = e.pageY - a.top - window.pageYOffset;
+                return { x: x, y: y };
+            }
+            img.addEventListener("mousemove", function (e) {
+                glass.style.display = "block";
+                moveMagnifier(e);
+            });
+            img.addEventListener("mouseleave", function () {
+                glass.style.display = "none";
+            });
+            img.addEventListener("mouseenter", function (e) {
+                glass.style.display = "block";
+                moveMagnifier(e);
+            });
+            // Touch support
+            img.addEventListener("touchmove", function (e) {
+                glass.style.display = "block";
+                moveMagnifier(e.touches[0]);
+            });
+            img.addEventListener("touchend", function () {
+                glass.style.display = "none";
+            });
+        }
+
+        // Initialize magnifier after all images are loaded
+        onImagesLoaded(document.querySelector('.gallery'), function () {
+            document.querySelectorAll('.gallery-photo img').forEach(function (img) {
+                magnify(img, 2.5);
+            });
+        });
+
+        // Side menu code
+        const openBtn = document.getElementById('openMenuBtn');
+        const closeBtn = document.getElementById('closeMenuBtn');
+        const sideMenu = document.getElementById('sideMenu');
+        const overlay = document.getElementById('sideMenuOverlay');
+
+        openBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            sideMenu.classList.add('open');
+            overlay.classList.add('open');
+        });
+        closeBtn.addEventListener('click', function () {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+        overlay.addEventListener('click', function () {
+            sideMenu.classList.remove('open');
+            overlay.classList.remove('open');
+        });
+    </script>
+</body>
+</html>
