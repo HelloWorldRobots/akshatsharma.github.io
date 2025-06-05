@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Timeline</title>
+    <style>
+        body {
+            background: #111;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        .as-home-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #fff;
+            background: none;
+            border: none;
+            z-index: 100;
+            font-weight: bold;
+            text-decoration: none;
+            padding: 0 12px;
+            transition: color 0.2s, transform 0.2s;
+        }
+
+            .as-home-btn:hover,
+            .as-home-btn:focus {
+                color: #04AA6D;
+                transform: scale(1.12);
+            }
+
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 auto;
+            padding: 80px 0 40px 0;
+            max-width: 900px;
+        }
+
+        .timeline {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(180deg, #04AA6D 0%, #222 100%);
+            box-shadow: 0 0 16px #04AA6D44;
+            border-radius: 3px;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .timeline-entry {
+            position: relative;
+            width: 100%;
+            min-height: 340px; /* Increased for longer scroll */
+            display: flex;
+            align-items: center;
+            margin: 80px 0; /* Increased for longer scroll */
+            z-index: 1;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, #04AA6D 60%, #222 100%);
+            border: 3px solid #fff;
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 2px 12px #04AA6D55;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* .timeline-year styles can be removed if desired */
+
+        .timeline-card {
+            background: rgba(30,30,30,0.97);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px #000a;
+            padding: 28px 22px;
+            min-width: 180px;
+            max-width: 320px;
+            font-size: 1.08rem;
+            color: #fff;
+            opacity: 0.85;
+            transition: filter 0.5s, opacity 0.5s, box-shadow 0.3s, transform 0.3s;
+            margin: 0 0 0 0;
+        }
+
+            .timeline-card:hover, .timeline-entry:not(.blur) .timeline-card {
+                box-shadow: 0 8px 32px #04AA6D33, 0 4px 24px #000a;
+                opacity: 1;
+                transform: scale(1.03);
+            }
+
+        .timeline-entry.left .timeline-card {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .timeline-entry.right .timeline-card {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        .timeline-entry.left {
+            flex-direction: row;
+            justify-content: flex-start;
+        }
+
+        .timeline-entry.right {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .timeline-entry.blur .timeline-card {
+            filter: blur(3px) grayscale(0.5);
+            opacity: 0.5;
+            transform: scale(1);
+        }
+
+        @media (max-width: 700px) {
+            .timeline-line {
+                left: 18px;
+                transform: none;
+            }
+
+            .timeline-entry,
+            .timeline-entry.left,
+            .timeline-entry.right {
+                flex-direction: column;
+                align-items: flex-start;
+                min-height: 200px; /* Increased for longer scroll on mobile */
+            }
+
+            .timeline-dot {
+                left: 0;
+                transform: translateY(-50%);
+                width: 14px;
+                height: 14px;
+            }
+
+            /* .timeline-year styles can be removed if desired */
+
+            .timeline-card {
+                min-width: 0;
+                width: 90vw;
+                max-width: 98vw;
+                font-size: 1rem;
+                padding: 16px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="as-home-btn" aria-label="Go to Home">AS</a>
+    <div class="timeline-container">
+        <div class="timeline">
+            <div class="timeline-line"></div>
+            <div class="timeline-entry left" data-year="2019">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">Under Dev</div>
+            </div>
+            <div class="timeline-entry right" data-year="2020">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">Under Dev</div>
+            </div>
+            <div class="timeline-entry left" data-year="2021">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">Under Dev</div>
+            </div>
+            <div class="timeline-entry right" data-year="2022">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">Under Dev</div>
+            </div>
+            <div class="timeline-entry left" data-year="2023">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">Under Dev</div>
+            </div>
+            <div class="timeline-entry right" data-year="Now">
+                <div class="timeline-dot"></div>
+                <div class="timeline-card">Under Dev</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Blur timeline entries that are not the most visible in viewport,
+        // but always keep first and last unblurred
+        function getMostVisibleEntry(entries) {
+            let minDist = Infinity;
+            let mostVisible = null;
+            const viewportCenter = window.innerHeight / 2;
+            entries.forEach(function (entry) {
+                const rect = entry.getBoundingClientRect();
+                const entryCenter = rect.top + rect.height / 2;
+                const dist = Math.abs(entryCenter - viewportCenter);
+                if (
+                    rect.top < window.innerHeight &&
+                    rect.bottom > 0 &&
+                    dist < minDist
+                ) {
+                    minDist = dist;
+                    mostVisible = entry;
+                }
+            });
+            return mostVisible;
+        }
+
+        function handleTimelineScroll() {
+            const entries = Array.from(document.querySelectorAll('.timeline-entry'));
+            const mostVisible = getMostVisibleEntry(entries);
+
+            entries.forEach(function (entry, idx) {
+                // Always keep first and last unblurred
+                if (entry === mostVisible || idx === 0 || idx === entries.length - 1) {
+                    entry.classList.remove('blur');
+                } else {
+                    entry.classList.add('blur');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleTimelineScroll);
+        window.addEventListener('resize', handleTimelineScroll);
+        window.addEventListener('DOMContentLoaded', handleTimelineScroll);
+    </script>
+</body>
+</html>
