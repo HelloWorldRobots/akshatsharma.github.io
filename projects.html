@@ -1,8 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Projects Gallery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             margin: 0;
@@ -12,6 +14,7 @@
             min-height: 100vh;
         }
 
+        /* Hamburger open button (matches index.html / photo.html) */
         .open-btn {
             position: fixed;
             top: 20px;
@@ -21,14 +24,26 @@
             color: #fff;
             background: none;
             border: none;
-            z-index: 20;
+            z-index: 50;
             text-decoration: none;
             font-weight: bold;
             letter-spacing: 2px;
             transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
         }
 
-            .open-btn:hover {
+            .open-btn svg {
+                width: 32px;
+                height: 32px;
+                display: block;
+                fill: currentColor;
+            }
+
+            .open-btn:hover,
+            .open-btn:focus {
                 color: #04AA6D;
             }
 
@@ -54,7 +69,6 @@
             align-items: flex-start;
             padding: 32px 28px 28px 28px;
             transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s, filter 0.3s;
-            cursor: pointer;
             position: relative;
             perspective: 600px;
             border: 2px solid transparent;
@@ -62,14 +76,13 @@
             animation: fadeInUp 0.7s cubic-bezier(.25,.8,.25,1) both;
             z-index: 1;
             overflow: visible;
+            cursor: default; /* card itself is not clickable any more */
         }
 
-            /* Remove the old ::before glow */
             .project-card::before {
                 display: none !important;
             }
 
-            /* New macOS-style animated border on hover/focus */
             .project-card::after {
                 content: "";
                 position: absolute;
@@ -88,13 +101,13 @@
                 mask-composite: exclude;
             }
 
-            .project-card:hover::after,
-            .project-card:focus::after {
+            .project-card.hoverable:hover::after,
+            .project-card.hoverable:focus::after {
                 opacity: 1;
             }
 
-            .project-card:hover,
-            .project-card:focus {
+            .project-card.hoverable:hover,
+            .project-card.hoverable:focus {
                 transform: translateY(-12px) scale(1.045) rotateY(8deg);
                 box-shadow: 0 16px 48px 0 #04AA6D44, 0 16px 40px 0 rgba(0,0,0,0.45);
                 z-index: 2;
@@ -111,27 +124,25 @@
             }
         }
 
-
-        .project-title,
-        .project-desc,
-        .project-link {
-            position: relative;
-            z-index: 1;
-        }
-
+        /* Ensure titles and descriptions never show underlines and inherit color */
         .project-title {
             font-size: 1.4rem;
             font-weight: bold;
             margin-bottom: 12px;
             letter-spacing: 1px;
+            text-decoration: none;
+            color: inherit;
         }
 
         .project-desc {
             font-size: 1rem;
             opacity: 0.85;
             margin-bottom: 18px;
+            text-decoration: none;
+            color: inherit;
         }
 
+        /* the only clickable element inside the card */
         .project-link {
             margin-top: auto;
             color: #04AA6D;
@@ -139,12 +150,22 @@
             font-weight: bold;
             font-size: 1rem;
             transition: color 0.2s;
+            display: inline-block;
+            cursor: pointer;
         }
 
-            .project-link:hover {
+            .project-link:hover,
+            .project-link:focus {
                 color: #fff;
                 text-decoration: underline;
             }
+
+        /* make hover effects available when pointer present, without making whole card clickable */
+        @media (hover: hover) and (pointer: fine) {
+            .project-card.hoverable {
+                cursor: pointer;
+            }
+        }
 
         @media (max-width: 900px) {
             .gallery-container {
@@ -169,41 +190,258 @@
             }
         }
 
-        @keyframes borderAnim {
-            0% {
-                background-position: 0% 50%;
+        /* --- Drawer - make it identical to photo.html drawbar --- */
+        body.overlay-open {
+            overflow: hidden;
+        }
+
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1400;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0, 0.95);
+            overflow-x: hidden;
+            transition: width 0.35s ease;
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 25%;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 12px;
+        }
+
+        /* Use same selectors as photo.html for consistent behavior */
+        .overlay a,
+        .overlay .submenu-toggle {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 36px;
+            color: #bfbfbf;
+            display: block;
+            transition: color 0.16s, transform 0.12s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+            .overlay a:hover, .overlay a:focus,
+            .overlay .submenu-toggle:hover, .overlay .submenu-toggle:focus {
+                color: #fff;
+                transform: translateY(-2px);
             }
 
-            100% {
-                background-position: 100% 50%;
-            }
+        /* Photography submenu matches photo.html */
+        .submenu {
+            width: 100%;
+            max-width: 520px;
+            position: relative;
         }
+
+        .submenu-list {
+            display: none;
+            margin-top: 6px;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 12px;
+        }
+
+        .submenu:hover .submenu-list {
+            display: flex;
+        }
+
+        .submenu.open .submenu-list {
+            display: flex;
+        }
+
+        .submenu-list a {
+            font-size: 22px;
+            color: #d7d7d7;
+            padding-left: 12px;
+            text-decoration: none;
+        }
+
+            .submenu-list a:hover, .submenu-list a:focus {
+                color: #fff;
+            }
+
+        /* Make closebtn rule SPECIFIC and placed after generic .overlay a so it won't be overridden */
+        .overlay a.closebtn {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 60px;
+            color: #fff;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 12px;
+            width: auto; /* don't let generic .overlay a width:100% center it */
+            text-align: right; /* keep symbol aligned to the right edge */
+        }
+
+        @media screen and (max-height: 450px) {
+            .overlay a {
+                font-size: 20px
+            }
+
+                .overlay a.closebtn {
+                    font-size: 40px;
+                    top: 15px;
+                    right: 35px;
+                }
+        }
+        /* --- end overlay styles --- */
     </style>
 </head>
 <body>
-    <a class="open-btn" href="index.html" title="Back to Home">AS</a>
+    <!-- Open button matches other pages -->
+    <button class="open-btn" onclick="openNav()" aria-label="Open menu" title="Open menu">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" role="img" fill="currentColor">
+            <rect y="7" width="32" height="3" rx="1.5" />
+            <rect y="14.5" width="32" height="3" rx="1.5" />
+            <rect y="22" width="32" height="3" rx="1.5" />
+        </svg>
+    </button>
+
     <div class="gallery-container">
-        <a class="project-card" href="#" target="_blank">
-            <div class="project-title">Project One</div>
-            <div class="project-desc">Description for Project.</div>
-            <span class="project-link">View Project</span>
-        </a>
-        <a class="project-card" href="#" target="_blank">
-            <div class="project-title">Project Two</div>
-            <div class="project-desc">Description for Project.</div>
-            <span class="project-link">View Project</span>
-        </a>
-        <a class="project-card" href="#" target="_blank">
-            <div class="project-title">Project Three</div>
-            <div class="project-desc">Description for Project.</div>
-            <span class="project-link">View Project</span>
-        </a>
-        <a class="project-card" href="#" target="_blank">
-            <div class="project-title">Project Four</div>
-            <div class="project-desc">Description for Project.</div>
-            <span class="project-link">View Project</span>
-        </a>
-        <!-- Add more project cards as needed -->
+        <div class="project-card hoverable">
+            <div class="project-title">Arduino based 4WD with automated Face-Cam Tracking (independent servo controlled) using Casscade Classifers with Raspberry Pi and Picam</div>
+            <div class="project-desc">
+                Arduino‑powered 4‑wheel‑drive robotic platform integrated with a Raspberry Pi and PiCam for real‑time face tracking. The system uses OpenCV cascade classifiers to detect faces and independently actuated servos to orient the camera toward the target. Features include autonomous tracking behavior, synchronized motor control, and a modular hardware/software architecture for future expansion.
+            </div>
+            <a class="project-link" href="#" target="_blank" aria-label="View Arduino project details">View Project Details and Pictures Here!</a>
+        </div>
+
+        <div class="project-card hoverable">
+            <div class="project-title">Smart Assistive Cane for Elderly/Disabled Individuals</div>
+            <div class="project-desc">A compact, electronics‑integrated smart cane designed to enhance mobility and safety for elderly and disabled users. Features include fall/drop alert with buzzer, automated claw assmebly inside stick to help grab hard to reach items using linear pinion, an controlled with a thumb joystick for relaxed daily use. Built using Arduino‑based sensing, low‑power electronics, and a lightweight frame, the cane provides real‑time environmental awareness while remaining discreet and user‑friendly. A model was built using 3D printed with a scale of 1:5 to demonstrate the product. </div>
+            <a class="project-link" href="#" target="_blank" aria-label="View Smart Assistive Cane details">View Project Details and Pictures Here!</a>
+        </div>
+
+        <div class="project-card hoverable">
+            <div class="project-title">Automated Home System using IoT + Cloud</div>
+            <div class="project-desc">A cloud‑connected home automation system built using IoT sensors, microcontrollers, and a web‑based dashboard. The system monitors temperature, motion, lighting, and appliance states, enabling remote control and automation routines through a app interface. App includes monitoring, task-scheduling and real-time notifications for security and energy efficiency. The project demonstrates seamless integration of hardware and cloud services to create a smart home ecosystem.</div>
+            <a class="project-link" href="#" target="_blank" aria-label="View Smart Assistive Cane details">View Project Details and Pictures Here!</a>
+        </div>
+
+        <div class="project-card hoverable">
+            <div class="project-title">Automated Irrigation System (IoT + Embedded)</div>
+            <div class="project-desc">An intelligent irrigation system that automates plant watering using soil‑moisture sensing, environmental monitoring, and cloud‑based analytics. The system uses microcontroller‑driven pumps to deliver precise water flow only when needed, reducing waste and improving plant health. This model was created on an IoT based platformed and linked with OpenWeatherAPI</div>
+            <a class="project-link" href="#" target="_blank" aria-label="View Irrigation System details">View Project Details and Pictures Here!</a>
+        </div>
+
+        <div class="project-card hoverable">
+            <div class="project-title">VTOL UAV for Agriculture & Aerial Monitoring</div>
+            <div class="project-desc">Currently in developmen, but a 5 motor V-tail based UAV that allows vertical flight and horizontal flight when in cruise mode.</div>
+            <a class="project-link" href="#" target="_blank" aria-label="View VTOL UAV details">View Project Details and Pictures Here!</a>
+        </div>
+
+        <div class="project-card hoverable">
+            <div class="project-title">RP2040‑Based Tracking Tag</div>
+            <div class="project-desc">Small tagging device connected with BLE allows notifications for lost items and theft protection by beeping when stolen.</div>
+            <a class="project-link" href="#" target="_blank" aria-label="View Tracking Tag details">View Project Details and Pictures Here!</a>
+        </div>
+
+        <div class="project-card hoverable">
+            <div class="project-title">Study on Hexacopter Flight Dynamics </div>
+            <div class="project-desc">Using ANSYS to perform and report a comprehensive study involving the flight and structural dynamics of a Hexacopter.</div>
+            <a class="project-link" href="#" target="_blank" aria-label="View Hexacopter study details">View Project Details and Pictures Here!</a>
+        </div>
+        <div class="project-card hoverable">
+        <div class="project-title">Portfolio Design and Code </div>
+        <div class="project-desc">Using HTML, CSS and JS to create webdesigns and portfolios</div>
+        <a class="project-link" href="#" target="_blank" aria-label="View Hexacopter study details">View Project Details and Pictures Here!</a>
     </div>
+
+    </div>
+
+    <!-- Drawer (exact structure used by photo.html) -->
+    <div id="myNav" class="overlay" aria-hidden="true">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <div class="overlay-content" role="navigation" aria-label="Main menu">
+            <a href="index.html" onclick="closeNav()">Home</a>
+            <a href="projects.html" onclick="closeNav()">Projects</a>
+
+            <div class="submenu" id="photographySubmenu">
+                <a href="photo.html" class="submenu-toggle" id="submenuToggle" aria-expanded="false" aria-controls="submenuList">Photography ▾</a>
+                <div class="submenu-list" id="submenuList" aria-hidden="true">
+                    <a href="photo.html" onclick="closeNav()">Gallery</a>
+                    <a href="photoshop.html" onclick="closeNav()">Photoshop Tutorials</a>
+                </div>
+            </div>
+
+            <a href="contact.html" onclick="closeNav()">About Me</a>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            const nav = document.getElementById("myNav");
+            if (!nav) return;
+            nav.style.width = "100%";
+            nav.setAttribute("aria-hidden", "false");
+            document.body.classList.add("overlay-open");
+        }
+        function closeNav() {
+            const nav = document.getElementById("myNav");
+            if (!nav) return;
+            nav.style.width = "0%";
+            nav.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("overlay-open");
+
+            // reset submenu state like photo.html
+            const submenu = document.getElementById('photographySubmenu');
+            if (submenu) submenu.classList.remove('open');
+            const toggle = document.getElementById('submenuToggle');
+            const list = document.getElementById('submenuList');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            if (list) list.setAttribute('aria-hidden', 'true');
+        }
+
+        // Accessibility: close drawer on Esc
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeNav();
+        });
+
+        // Close drawer when clicking outside overlay content
+        document.getElementById('myNav').addEventListener('click', function (e) {
+            if (e.target === this) closeNav();
+        });
+
+        // Submenu toggle for touch devices / explicit control (matches photo.html)
+        (function () {
+            const submenu = document.getElementById('photographySubmenu');
+            const toggle = document.getElementById('submenuToggle');
+            const list = document.getElementById('submenuList');
+
+            if (!toggle || !submenu) return;
+
+            toggle.addEventListener('click', function (e) {
+                if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
+                    e.preventDefault();
+                    const isOpen = submenu.classList.toggle('open');
+                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                } else {
+                    // On pointer devices allow the Photography link to navigate to gallery
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
