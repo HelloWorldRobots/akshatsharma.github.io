@@ -1,9 +1,15 @@
+html akshatsharma.github.io-main\contact.html
 <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Timeline</title>
+    <title>About Me</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             background: #111;
             color: #fff;
@@ -12,7 +18,7 @@
             min-height: 100vh;
         }
 
-        .as-home-btn {
+        .open-btn {
             position: fixed;
             top: 20px;
             left: 20px;
@@ -26,231 +32,306 @@
             text-decoration: none;
             padding: 0 12px;
             transition: color 0.2s, transform 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
-            .as-home-btn:hover,
-            .as-home-btn:focus {
+            .open-btn:hover,
+            .open-btn:focus {
                 color: #04AA6D;
                 transform: scale(1.12);
             }
 
-        .timeline-container {
+        .about-container {
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 0 auto;
-            padding: 80px 0 40px 0;
-            max-width: 900px;
+            justify-content: center;
+            padding: 60px 16px 40px 16px;
         }
 
-        .timeline {
-            position: relative;
+        .about-card {
+            background: rgba(30,30,30,0.97);
+            border-radius: 18px;
+            box-shadow: 0 4px 32px #000a;
+            max-width: 480px;
             width: 100%;
-            margin: 0 auto;
-        }
-
-        .timeline-line {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: 6px;
-            height: 100%;
-            background: linear-gradient(180deg, #04AA6D 0%, #222 100%);
-            box-shadow: 0 0 16px #04AA6D44;
-            border-radius: 3px;
-            transform: translateX(-50%);
-            z-index: 0;
-            transition: left 0.3s, width 0.3s;
-        }
-
-        .timeline-entry {
-            position: relative;
-            width: 100%;
-            min-height: 340px;
+            padding: 40px 32px;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            margin: 80px 0;
-            z-index: 1;
-            transition: flex-direction 0.3s, min-height 0.3s;
+            opacity: 0.95;
         }
 
-        .timeline-dot {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 18px;
-            height: 18px;
-            background: linear-gradient(135deg, #04AA6D 60%, #222 100%);
-            border: 3px solid #fff;
+        .about-avatar {
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            z-index: 3;
-            box-shadow: 0 2px 12px #04AA6D55;
+            background: linear-gradient(135deg, #04AA6D 60%, #222 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: left 0.3s;
-        }
-
-        .timeline-card {
-            background: rgba(30,30,30,0.97);
-            border-radius: 16px;
-            box-shadow: 0 4px 24px #000a;
-            padding: 28px 22px;
-            min-width: 180px;
-            max-width: 320px;
-            font-size: 1.08rem;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 16px #04AA6D44;
+            font-size: 3rem;
             color: #fff;
-            opacity: 0.85;
-            transition: filter 0.5s, opacity 0.5s, box-shadow 0.3s, transform 0.3s, width 0.3s;
-            margin: 0 0 0 0;
+            user-select: none;
         }
 
-            .timeline-card:hover, .timeline-entry:not(.blur) .timeline-card {
-                box-shadow: 0 8px 32px #04AA6D33, 0 4px 24px #000a;
-                opacity: 1;
-                transform: scale(1.03);
-            }
-
-        .timeline-entry.left .timeline-card {
-            margin-right: auto;
-            margin-left: 0;
+        .about-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            text-align: center;
         }
 
-        .timeline-entry.right .timeline-card {
-            margin-left: auto;
-            margin-right: 0;
+        .about-subtitle {
+            font-size: 1.1rem;
+            color: #04AA6D;
+            margin-bottom: 18px;
+            text-align: center;
         }
 
-        .timeline-entry.left {
-            flex-direction: row;
-            justify-content: flex-start;
+        .about-text {
+            font-size: 1.08rem;
+            color: #eee;
+            text-align: center;
+            line-height: 1.7;
+            margin-bottom: 0;
         }
 
-        .timeline-entry.right {
-            flex-direction: row-reverse;
-            justify-content: flex-end;
-        }
-
-        .timeline-entry.blur .timeline-card {
-            filter: blur(3px) grayscale(0.5);
-            opacity: 0.5;
-            transform: scale(1);
-        }
-
-        /* --- MOBILE: Centered timeline --- */
-        @media (max-width: 700px) {
-            .timeline-line {
-                left: 50%;
-                width: 4px;
-                transform: translateX(-50%);
-            }
-
-            .timeline-entry,
-            .timeline-entry.left,
-            .timeline-entry.right {
-                flex-direction: column;
-                align-items: center;
-                min-height: 120px;
-                margin: 48px 0;
-            }
-
-            .timeline-dot {
-                position: relative;
-                margin: 0 auto 16px auto;
-                left: auto;
-                top: auto;
-                transform: none;
-                width: 16px;
-                height: 16px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .timeline-card {
-                min-width: 0;
-                width: 90vw;
+        @media (max-width: 600px) {
+            .about-card {
+                padding: 24px 8px;
                 max-width: 98vw;
-                font-size: 1rem;
-                padding: 16px 12px;
-                margin: 0;
-                margin-top: 0;
             }
+
+            .about-title {
+                font-size: 1.3rem;
+            }
+
+            .about-avatar {
+                width: 70px;
+                height: 70px;
+                font-size: 2rem;
+            }
+        }
+
+        /* Drawer overlay styles — match photo.html drawbar exactly */
+        body.overlay-open {
+            overflow: hidden;
+        }
+
+        .overlay {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 200;
+            top: 0;
+            left: 0;
+            background-color: rgba(0,0,0, 0.95);
+            overflow-x: hidden;
+            transition: width 0.35s ease;
+        }
+
+        .overlay-content {
+            position: relative;
+            top: 25%;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 0 12px;
+        }
+
+        /* Generic overlay links and submenu toggle */
+        .overlay a,
+        .overlay .submenu-toggle {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 36px;
+            color: #bfbfbf;
+            display: block;
+            transition: color 0.16s, transform 0.12s;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+            .overlay a:hover, .overlay a:focus,
+            .overlay .submenu-toggle:hover, .overlay .submenu-toggle:focus {
+                color: #fff;
+                transform: translateY(-2px);
+            }
+
+        /* Submenu */
+        .submenu {
+            width: 100%;
+            max-width: 520px;
+            position: relative;
+        }
+
+        .submenu-list {
+            display: none;
+            margin-top: 6px;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 12px;
+        }
+        /* show on hover for pointer devices */
+        .submenu:hover .submenu-list {
+            display: flex;
+        }
+        /* explicit open state (toggled on click for touch) */
+        .submenu.open .submenu-list {
+            display: flex;
+        }
+
+        .submenu-list a {
+            font-size: 22px;
+            color: #d7d7d7;
+            padding-left: 12px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+            .submenu-list a:hover, .submenu-list a:focus {
+                color: #fff;
+            }
+
+        /* Make close control an anchor and ensure it isn't affected by the generic overlay a rules */
+        .overlay a.closebtn {
+            position: absolute;
+            top: 20px;
+            right: 45px;
+            font-size: 60px;
+            color: #fff;
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0 12px;
+            width: auto;
+            text-align: right;
+        }
+
+        @media screen and (max-height: 450px) {
+            .overlay a {
+                font-size: 20px
+            }
+
+                .overlay a.closebtn {
+                    font-size: 40px;
+                    top: 15px;
+                    right: 35px;
+                }
         }
     </style>
 </head>
 <body>
-    <a href="index.html" class="as-home-btn" aria-label="Go to Home">AS</a>
-    <div class="timeline-container">
-        <div class="timeline">
-            <div class="timeline-line"></div>
-            <div class="timeline-entry left" data-year="2019">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">Under Dev</div>
-            </div>
-            <div class="timeline-entry right" data-year="2020">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">Under Dev</div>
-            </div>
-            <div class="timeline-entry left" data-year="2021">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">Under Dev</div>
-            </div>
-            <div class="timeline-entry right" data-year="2022">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">Under Dev</div>
-            </div>
-            <div class="timeline-entry left" data-year="2023">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">Under Dev</div>
-            </div>
-            <div class="timeline-entry right" data-year="Now">
-                <div class="timeline-dot"></div>
-                <div class="timeline-card">Under Dev</div>
+    <!-- Hamburger button opens drawer -->
+    <button class="open-btn" onclick="openNav()" aria-label="Open menu" title="Open menu">
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false" role="img" fill="currentColor">
+            <rect y="7" width="32" height="3" rx="1.5" />
+            <rect y="14.5" width="32" height="3" rx="1.5" />
+            <rect y="22" width="32" height="3" rx="1.5" />
+        </svg>
+    </button>
+
+    <div class="about-container">
+        <div class="about-card">
+            <div class="about-avatar">AS</div>
+            <div class="about-title">Akshat Sharma</div>
+            <div class="about-subtitle">Web Developer &amp; Enthusiast</div>
+            <div class="about-text">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, nisi eu consectetur consectetur, nisl nisi consectetur nisi, euismod euismod nisi nisi euismod. <br><br>
+                Vivamus luctus urna sed urna ultricies ac tempor dui sagittis. In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam porttitor mauris, quis sollicitudin sapien justo in libero.
             </div>
         </div>
     </div>
+
+    <!-- Drawer (structure matches photo.html) -->
+    <div id="myNav" class="overlay" aria-hidden="true">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+        <nav class="overlay-content" role="navigation" aria-label="Main menu">
+            <a href="index.html" onclick="closeNav()">Home</a>
+            <a href="projects.html" onclick="closeNav()">Projects</a>
+
+            <div class="submenu" id="photographySubmenu">
+                <a href="photo.html" class="submenu-toggle" id="submenuToggle" aria-expanded="false" aria-controls="submenuList">Photography ▾</a>
+                <div class="submenu-list" id="submenuList" aria-hidden="true">
+                    <a href="photo.html" onclick="closeNav()">Gallery</a>
+                    <a href="photoshop.html" onclick="closeNav()">Photoshop Tutorials</a>
+                </div>
+            </div>
+
+            <a href="contact.html" onclick="closeNav()">About Me</a>
+        </nav>
+    </div>
+
     <script>
-        // Blur timeline entries that are not the most visible in viewport,
-        // but always keep first and last unblurred
-        function getMostVisibleEntry(entries) {
-            let minDist = Infinity;
-            let mostVisible = null;
-            const viewportCenter = window.innerHeight / 2;
-            entries.forEach(function (entry) {
-                const rect = entry.getBoundingClientRect();
-                const entryCenter = rect.top + rect.height / 2;
-                const dist = Math.abs(entryCenter - viewportCenter);
-                if (
-                    rect.top < window.innerHeight &&
-                    rect.bottom > 0 &&
-                    dist < minDist
-                ) {
-                    minDist = dist;
-                    mostVisible = entry;
-                }
-            });
-            return mostVisible;
+        // Drawer open/close
+        function openNav() {
+            const nav = document.getElementById("myNav");
+            if (!nav) return;
+            nav.style.width = "100%";
+            nav.setAttribute("aria-hidden", "false");
+            document.body.classList.add("overlay-open");
+        }
+        function closeNav() {
+            const nav = document.getElementById("myNav");
+            if (!nav) return;
+            nav.style.width = "0%";
+            nav.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("overlay-open");
+            // reset submenu state
+            const submenu = document.getElementById('photographySubmenu');
+            if (submenu) submenu.classList.remove('open');
+            const toggle = document.getElementById('submenuToggle');
+            const list = document.getElementById('submenuList');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            if (list) list.setAttribute('aria-hidden', 'true');
         }
 
-        function handleTimelineScroll() {
-            const entries = Array.from(document.querySelectorAll('.timeline-entry'));
-            const mostVisible = getMostVisibleEntry(entries);
+        // accessibility: Esc closes drawer
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeNav();
+        });
 
-            entries.forEach(function (entry, idx) {
-                // Always keep first and last unblurred
-                if (entry === mostVisible || idx === 0 || idx === entries.length - 1) {
-                    entry.classList.remove('blur');
+        // click outside content closes drawer
+        document.getElementById('myNav').addEventListener('click', function (e) {
+            if (e.target === this) closeNav();
+        });
+
+        // submenu toggle for touch devices (matches photo.html)
+        (function () {
+            const submenu = document.getElementById('photographySubmenu');
+            const toggle = document.getElementById('submenuToggle');
+            const list = document.getElementById('submenuList');
+            if (!toggle) return;
+            toggle.addEventListener('click', function (e) {
+                // On touch / small screens toggle submenu instead of navigating immediately
+                if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
+                    e.preventDefault();
+                    const isOpen = submenu.classList.toggle('open');
+                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
                 } else {
-                    entry.classList.add('blur');
+                    // On pointer devices allow the Photography link to navigate to gallery
                 }
             });
-        }
-
-        window.addEventListener('scroll', handleTimelineScroll);
-        window.addEventListener('resize', handleTimelineScroll);
-        window.addEventListener('DOMContentLoaded', handleTimelineScroll);
+        })();
     </script>
 </body>
 </html>
