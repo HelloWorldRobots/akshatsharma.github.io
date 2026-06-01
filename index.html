@@ -3,14 +3,29 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        :root {
+            --bg-dark: #111;
+            --text-soft: rgba(245,247,250,0.95); /* off-white, less harsh than pure white */
+            --text-muted: rgba(230,235,239,0.92);
+            --panel-dark: rgba(0,0,0,0.45); /* for subtle translucent panel behind text */
+            --accent: #04AA6D;
+        }
+
         html {
             font-family: Arial, Helvetica, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+
         body {
             margin: 0;
-            background: #111;
+            background: var(--bg-dark);
             font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px; /* reset to normal base size, avoid overly large default */
+            color: var(--text-soft);
+            line-height: 1.35;
         }
+
         .footer {
             width: 100%;
             background: rgba(0,0,0,0.85);
@@ -38,7 +53,7 @@
         }
 
         .footer-right {
-            color: #fff;
+            color: var(--text-soft);
             font-size: 0.9rem;
             font-weight: bold;
             opacity: 0.85;
@@ -53,7 +68,7 @@
         .footer-icon {
             width: 22px;
             height: 22px;
-            color: #fff;
+            color: var(--text-soft);
             opacity: 0.95;
             transition: opacity 0.2s, transform 0.2s, color 0.2s;
         }
@@ -62,7 +77,7 @@
         .footer a:focus .footer-icon {
             opacity: 1;
             transform: scale(1.15);
-            color: #04AA6D;
+            color: var(--accent);
         }
 
         @media (max-width: 700px) {
@@ -104,7 +119,32 @@
             max-width: 700px;
             z-index: 2;
             pointer-events: none;
+            padding: 8px; /* room for the translucent panel behind */
         }
+
+            /* translucent softened panel behind text to reduce harsh contrast */
+            .text-stack::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: calc(100% + 24px);
+                height: calc(100% + 20px);
+                background: var(--panel-dark);
+                backdrop-filter: blur(6px) saturate(1.05);
+                border-radius: 12px;
+                z-index: 1;
+                pointer-events: none;
+                transition: background 0.25s, backdrop-filter 0.25s;
+            }
+
+            /* ensure text sits above the panel */
+            .text-stack > * {
+                position: relative;
+                z-index: 2;
+            }
+
         /* Image 2: middle right */
         .img2 .text-stack {
             left: 75%;
@@ -132,37 +172,46 @@
 
             .text-stack {
                 max-width: 98vw;
+                padding: 6px;
             }
+
+                .text-stack::before {
+                    width: calc(100% + 12px);
+                    height: calc(100% + 10px);
+                    border-radius: 10px;
+                }
         }
+
         .animated-text,
         .animated-text-secondary {
             position: static;
             opacity: 0;
-            transition: opacity 1.5s;
+            transition: opacity 1.2s ease, transform 0.3s ease;
             width: 100%;
             text-align: center;
             background: none;
             word-break: break-word;
             font-size: 2rem;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.7), 0 0 2px #000;
+            color: var(--text-soft);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6); /* softer shadow */
             padding: 0 12px;
             margin: 0;
+            font-weight: 300; /* lighter weight for gentler appearance */
+            letter-spacing: 0.2px;
         }
+
         .animated-text-secondary {
-            font-size: 1.2rem;
-            font-weight: normal;
-            margin-top: 1em;
+            font-size: 1.15rem;
+            font-weight: 400;
+            margin-top: 0.75em;
+            color: var(--text-muted);
+            opacity: 0.95;
         }
 
         .bg-image.show-text .animated-text,
         .bg-image.show-text .animated-text-secondary {
             opacity: 1;
-        }
-        body {
-            margin: 0;
-            font-size: 28px;
-            font-family: Arial, Helvetica, sans-serif;
+            transform: none;
         }
 
         .bg-image {
@@ -171,6 +220,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .progress-container-img1 {
             position: fixed;
             top: 0;
@@ -188,23 +238,24 @@
             height: 8px;
             background: #fff;
             width: 0%;
-            transition: width 0.2s;
+            transition: width 0.12s linear;
         }
 
         .progress-container-img1.visible {
             opacity: 1;
         }
-            .bg-image::before {
-                content: "";
-                position: absolute;
-                inset: 0;
-                background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), inherit; /* fallback, will be overridden by .img1/.img2 */
-                background-position: center;
-                background-repeat: no-repeat;
-                background-size: cover;
-                z-index: 0;
-                transition: filter 0.5s;
-            }
+
+        .bg-image::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), inherit;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            z-index: 0;
+            transition: filter 0.5s;
+        }
 
         .img1::before {
             background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1749071387298-07d621776a73?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
@@ -217,8 +268,19 @@
         .img3::before {
             background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images.unsplash.com/photo-1593955654387-9dcbc8ef8071?q=80&w=2110&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
         }
+
         .bg-image.blur::before {
-            filter: blur(0.7px);
+            filter: blur(4px);
+            transform: scale(1.02);
+        }
+
+        /* When a bg-image is blurred, hide its text (so only the most visible shows) */
+        .bg-image.blur .animated-text,
+        .bg-image.blur .animated-text-secondary {
+            opacity: 0 !important;
+            filter: blur(2px);
+            transition: opacity 0.35s, filter 0.35s;
+            pointer-events: none;
         }
 
         .bg-image.show-text .animated-text {
@@ -231,7 +293,7 @@
             left: 20px;
             font-size: 30px;
             cursor: pointer;
-            color: #fff;
+            color: var(--text-soft);
             background: none;
             border: none;
             z-index: 2;
@@ -241,6 +303,7 @@
         .content {
             padding: 0;
         }
+
         body.overlay-open .bg-image .text-stack,
         body.overlay-open .bg-image .animated-text,
         body.overlay-open .bg-image .animated-text-secondary {
@@ -302,13 +365,18 @@
     </style>
 </head>
 <body>
+    <!-- Sticky progress bar (restored) -->
+    <div id="stickyProgress" class="progress-container-img1" aria-hidden="true">
+        <div id="img1Bar" class="progress-bar-img1"></div>
+    </div>
+
     <!-- Popup Overlay Warning -->
     <div id="devWarningOverlay" style="position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;">
         <div style="background:rgba(30,30,30,0.98);padding:36px 28px 24px 28px;border-radius:18px;box-shadow:0 4px 32px #000a;display:flex;flex-direction:column;align-items:center;max-width:90vw;">
             <div style="font-size:64px;color:#ffcc00;margin-bottom:18px;">
                 &#9888;
             </div>
-            <div style="color:#fff;font-size:1.5rem;text-align:center;margin-bottom:24px;">
+            <div style="Color:#fff;font-size:1.5rem;text-align:center;margin-bottom:24px;">
                 This page is under dev
             </div>
             <button id="devWarningOkBtn" style="padding:10px 32px;font-size:1.1rem;border:none;border-radius:6px;background:#ffcc00;color:#222;font-weight:bold;cursor:pointer;box-shadow:0 2px 8px #0004;">
@@ -316,34 +384,36 @@
             </button>
         </div>
     </div>
-    <button class="open-btn" onclick="openNav()">AS</button>
-    <div class="progress-container-img1" id="stickyProgress">
-        <div class="progress-bar-img1" id="img1Bar"></div>
-    </div>
+    <button class="open-btn" onclick="openNav()" aria-label="Open menu">
+        <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect y="7" width="32" height="3" rx="1.5" fill="currentColor" />
+            <rect y="14.5" width="32" height="3" rx="1.5" fill="currentColor" />
+            <rect y="22" width="32" height="3" rx="1.5" fill="currentColor" />
+        </svg>
+    </button>
 
     <div class="bg-image img1">
         <div class="text-stack">
-            <span class="animated-text">Under Dev!</span>
-            <span class="animated-text-secondary">Under Dev.</span>
+            <span class="animated-text">Welcome to my Portfolio!</span>
+            <span class="animated-text-secondary">I am Akshat!</span>
         </div>
     </div>
     <div class="bg-image img2">
         <div class="text-stack">
-            <span class="animated-text">Under Dev!</span>
-            <span class="animated-text-secondary">Under Dev.</span>
+            <span class="animated-text">Currently a student at Rutgers</span>
+            <span class="animated-text-secondary">Pursuing BS in Mechanical Enginnering</span>
         </div>
     </div>
     <div class="bg-image img3">
         <div class="text-stack">
-            <span class="animated-text">Under Dev!</span>
-            <span class="animated-text-secondary">Under Dev.</span>
+            <span class="animated-text">Feel free to explore my page!</span>
+            <span class="animated-text-secondary">*Note* Some features might be buggy due to current development</span>
         </div>
     </div>
 
     <div id="myNav" class="overlay">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="overlay-content">
-            <a href="sports.html">Sports</a>
             <a href="projects.html">Projects</a>
             <a href="photo.html">Photography</a>
             <a href="contact.html">About Me</a>
@@ -354,23 +424,29 @@
             var barContainer = document.getElementById('stickyProgress');
             var bar = document.getElementById('img1Bar');
             var img1 = document.querySelector('.img1');
+            if (!barContainer || !bar || !img1) return;
             var rect = img1.getBoundingClientRect();
 
-            // Calculate page scroll progress
-            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var scrolled = (winScroll / height) * 100;
+            // Determine how many px of img1 have been scrolled past the top of the viewport.
+            // rect.top is distance from viewport top to img1 top (negative once scrolled).
+            var scrolledWithin = Math.min(Math.max(-rect.top, 0), rect.height);
+            var percent = 0;
+            if (rect.height > 0) {
+                percent = (scrolledWithin / rect.height) * 100;
+                // clamp 0..100
+                percent = Math.max(0, Math.min(100, percent));
+            }
 
-            // Show bar only after scrolling past the top of img1
-            if (rect.top < 0) {
+            // Show/hide the progress container when the first image is at least partially scrolled
+            if (scrolledWithin > 0) {
                 barContainer.classList.add('visible');
-                bar.style.width = scrolled + "%";
+                bar.style.width = percent + "%";
             } else {
                 barContainer.classList.remove('visible');
                 bar.style.width = "0%";
             }
         }
-        window.addEventListener('scroll', updatePageProgressBar);
+        window.addEventListener('scroll', updatePageProgressBar, { passive: true });
         window.addEventListener('resize', updatePageProgressBar);
         window.addEventListener('DOMContentLoaded', updatePageProgressBar);
 
@@ -410,17 +486,23 @@
 
             images.forEach(function (imgDiv) {
                 if (imgDiv === mostVisible) {
-                    imgDiv.classList.add('show-text', 'blur');
+                    // Visible one: show text, remove blur
+                    imgDiv.classList.add('show-text');
+                    imgDiv.classList.remove('blur');
                 } else {
-                    imgDiv.classList.remove('show-text', 'blur');
+                    // Hidden ones: remove text and add blur
+                    imgDiv.classList.remove('show-text');
+                    imgDiv.classList.add('blur');
                 }
             });
         }
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleScroll);
-        window.addEventListener('DOMContentLoaded', handleScroll);
         window.addEventListener('DOMContentLoaded', function () {
+            handleScroll();
+            updatePageProgressBar();
+
             if (!sessionStorage.getItem('devWarningShown')) {
                 document.body.style.overflow = 'hidden';
                 document.getElementById('devWarningOverlay').style.display = 'flex';
@@ -437,7 +519,6 @@
     </script>
 
 
-
     <footer class="footer">
         <div class="footer-spacer"></div>
         <div class="footer-icons">
@@ -447,7 +528,7 @@
             <a href="https://unsplash.com" target="_blank" aria-label="Unsplash">
                 <svg class="footer-icon" viewBox="0 0 32 32"><path fill="currentColor" d="M10 12V4h12v8h8v16H2V12zm2-6v6h8V6zm16 8H4v12h24z" /></svg>
             </a>
-            <a href="https://github.com" target="_blank" aria-label="GitHub">
+            <a href="https://github.com" target="_blank" aria-label="=GitHub">
                 <svg class="footer-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.484 2 12.021c0 4.428 2.865 8.184 6.839 9.504c.5.092.682-.217.682-.482c0-.237-.009-.868-.014-1.703c-2.782.605-3.369-1.342-3.369-1.342c-.454-1.154-1.11-1.462-1.11-1.462c-.908-.62.069-.608.069-.608c1.004.07 1.532 1.032 1.532 1.032c.892 1.53 2.341 1.088 2.91.832c.092-.647.35-1.088.636-1.339c-2.221-.253-4.555-1.113-4.555-4.951c0-1.093.39-1.988 1.029-2.688c-.103-.253-.446-1.272.098-2.65c0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 6.844c.85.004 1.705.115 2.504.337c1.909-1.295 2.748-1.025 2.748-1.025c.546 1.378.202 2.397.1 2.65c.64.7 1.028 1.595 1.028 2.688c0 3.847-2.337 4.695-4.566 4.944c.359.309.678.919.678 1.852c0 1.336-.012 2.415-.012 2.744c0 .268.18.579.688.48A10.025 10.025 0 0 0 22 12.021C22 6.484 17.523 2 12 2z" /></svg>
             </a>
             <a href="https://www.fitbit.com" target="_blank" aria-label="Fitbit">
