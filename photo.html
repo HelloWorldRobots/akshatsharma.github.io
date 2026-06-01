@@ -1,3 +1,4 @@
+akshatsharma.github.io-main\photo.html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,82 +26,127 @@
             font-weight: bold;
             letter-spacing: 2px;
             transition: color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 8px;
         }
 
-            .open-btn:hover {
+            .open-btn svg {
+                width: 32px;
+                height: 32px;
+                fill: currentColor;
+                display: block;
+            }
+
+            .open-btn:hover,
+            .open-btn:focus {
                 color: #04AA6D;
             }
 
-        /* Side menu styles */
-        .side-menu-overlay {
+        /* Full-screen overlay / drawer (same behavior as index.html) */
+        .overlay {
+            height: 100%;
+            width: 0;
             position: fixed;
+            z-index: 1000;
             top: 0;
             left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            display: none;
-            transition: background 0.3s;
+            background-color: rgba(0,0,0, 0.95);
+            overflow-x: hidden;
+            transition: width 0.35s ease;
         }
 
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100vh;
-            width: 260px;
-            background: #181818;
-            box-shadow: 2px 0 16px rgba(0,0,0,0.25);
-            z-index: 1001;
-            transform: translateX(-100%);
-            transition: transform 0.3s;
+            .overlay .closebtn {
+                position: absolute;
+                top: 20px;
+                right: 45px;
+                font-size: 60px;
+                color: #fff;
+                text-decoration: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 0 12px;
+            }
+        .overlay-content {
+            position: relative;
+            top: 25%;
+            width: 100%;
+            text-align: center;
+            margin-top: 30px;
             display: flex;
             flex-direction: column;
-            padding: 40px 0 0 0;
+            gap: 18px;
+            align-items: center;
+            justify-content: flex-start;
         }
 
-            .side-menu.open {
-                transform: translateX(0);
-            }
-
-        .side-menu-overlay.open {
+        .overlay a,
+        .overlay .submenu-toggle {
+            padding: 8px;
+            text-decoration: none;
+            font-size: 36px;
+            color: #818181;
             display: block;
-        }
-
-        .side-menu .close-btn {
-            position: absolute;
-            top: 18px;
-            right: 18px;
-            font-size: 32px;
-            color: #fff;
+            transition: color 0.3s, transform 0.12s;
             background: none;
             border: none;
             cursor: pointer;
-            z-index: 1002;
+            width: 100%;
+            text-align: center;
         }
 
-        .side-menu nav {
-            display: flex;
-            flex-direction: column;
-            margin-top: 40px;
-            gap: 18px;
-            padding-left: 32px;
-        }
-
-            .side-menu nav a {
-                color: #fff;
-                text-decoration: none;
-                font-size: 1.2rem;
-                font-weight: bold;
-                letter-spacing: 1px;
-                transition: color 0.2s;
+            .overlay a:hover, .overlay a:focus,
+            .overlay .submenu-toggle:hover, .overlay .submenu-toggle:focus {
+                color: #f1f1f1;
+                transform: translateY(-2px);
             }
 
-                .side-menu nav a:hover {
-                    color: #04AA6D;
-                }
+        /* Submenu styles */
+        .submenu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
 
+        .submenu-list {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .submenu.open .submenu-list {
+            display: flex;
+        }
+
+        .submenu:hover .submenu-list {
+            display: flex;
+        }
+
+        .submenu-list a {
+            font-size: 22px;
+            color: #d7d7d7;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        @media screen and (max-height: 450px) {
+            .overlay a {
+                font-size: 20px
+            }
+
+            .overlay .closebtn {
+                font-size: 40px;
+                top: 15px;
+                right: 35px;
+            }
+        }
+
+        /* Gallery + magnifier styles kept from original */
         .gallery {
             column-count: 3;
             column-gap: 24px;
@@ -173,25 +219,19 @@
             .gallery-photo {
                 border-radius: 6px;
             }
-
-            .side-menu {
-                width: 80vw;
-                min-width: 180px;
-                max-width: 320px;
-            }
         }
     </style>
 </head>
 <body>
-    <button class="open-btn" id="openMenuBtn" title="Open Menu">AS</button>
-    <div class="side-menu-overlay" id="sideMenuOverlay"></div>
-    <aside class="side-menu" id="sideMenu">
-        <button class="close-btn" id="closeMenuBtn" title="Close Menu">&times;</button>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="#" id="videoLink">Photoshop Tutorials</a>
-        </nav>
-    </aside>
+    <!-- Open button now opens the same full-screen drawer used on index.html -->
+    <button class="open-btn" onclick="openNav()" aria-label="Open menu" title="Open menu">
+        <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" role="img">
+            <rect y="7" width="32" height="3" rx="1.5" />
+            <rect y="14.5" width="32" height="3" rx="1.5" />
+            <rect y="22" width="32" height="3" rx="1.5" />
+        </svg>
+    </button>
+
     <div class="gallery">
         <a class="gallery-photo" href="https://unsplash.com/photos/-uRO13NVIvY" target="_blank">
             <img id="img1" src="https://images.unsplash.com/photo-1748904434534-6c61b9ba409a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwcm9maWxlLXBhZ2V8Mzh8fHxlbnwwfHx8fHw%3D" alt="Sample 1">
@@ -202,37 +242,88 @@
         <a class="gallery-photo" href="https://unsplash.com/photos/sGQZ0DPobQE" target="_blank">
             <img id="img3" src="https://images.unsplash.com/photo-1749071387246-92e125fd11da?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 3">
         </a>
-        <div style="column-span: all; width:100%; text-align:center; margin: 32px 0 16px 0; color:#04AA6D; font-size:1.2rem; font-weight:bold;">
-            Under Dev, more coming here
-        </div>
+      
         <!-- Add more images as needed -->
-    </div>
-        <!--
-
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img4" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
-    </a>
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img5" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Sample 3">
-    </a>
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img6" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
-    </a>
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img7" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Sample 3">
-    </a>
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img8" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
-    </a>
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img9" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=800&q=80" alt="Sample 3">
-    </a>
-    <a class="gallery-photo" href="https://unsplash.com/" target="_blank">
-        <img id="img10" src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=800&q=80" alt="Sample 4">
-    </a>
-    <!-- Add more images as needed -->
+        <a class="gallery-photo" href="https://unsplash.com/photos/decUmka7Tuk" target="_blank">
+            <img id="img4" src="https://images.unsplash.com/photo-1779940405509-3b023a0f73ef?q=80&w=876&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 4">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/zpAfuwnjOjA" target="_blank">
+            <img id="img5" src="https://images.unsplash.com/photo-1779899938770-671a15ba5100?q=80&w=2784&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 5">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/robotic-arm-with-pincers-in-a-dusty-environment-Au8NdOftMaI" target="_blank">
+            <img id="img6" src="https://images.unsplash.com/photo-1774229637247-3cd45219826c?q=80&w=3749&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/a-dragonfly-clings-to-a-thin-branch-with-green-foliage-X350xXmNEe0" target="_blank">
+            <img id="img7" src="https://images.unsplash.com/photo-1774229631002-ecaa9fadd0ef?q=80&w=2718&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/a-llama-stands-on-a-rocky-hill-under-cloudy-sky-bs6O5Vikymk" target="_blank">
+            <img id="img8" src="https://images.unsplash.com/photo-1761447618446-6beaa1598c3d?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/close-up-of-a-green-circuit-board-with-components-mrTVz_fosMY" target="_blank">
+            <img id="img9" src="https://images.unsplash.com/photo-1760842543713-108c3cadbba1?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/5NRURxV3QKk" target="_blank">
+            <img id="img10" src="https://images.unsplash.com/photo-1760666276890-1cd9b46bc169?q=80&w=980&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/close-up-of-a-bee-with-its-proboscis-extended-Lwqj6KdWhEU" target="_blank">
+            <img id="img11" src="https://images.unsplash.com/photo-1756084353221-2c580d6d02f2?q=80&w=943&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/a-close-up-view-of-a-coral-colored-rose-PulET52UpzY" target="_blank">
+            <img id="img12" src="https://images.unsplash.com/photo-1752426411025-733055426b50?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
        
-   
+        <a class="gallery-photo" href="https://unsplash.com/photos/OHPgFT0lyBo" target="_blank">
+            <img id="img14" src="https://images.unsplash.com/photo-1752220355990-649ddb099c69?q=80&w=616&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+       
+        <a class="gallery-photo" href="https://unsplash.com/photos/water-droplets-sit-on-a-leaf-with-intricate-veins-2AZA4xFOLVs" target="_blank">
+            <img id="img16" src="https://images.unsplash.com/photo-1749071402554-03dab6a55b00?q=80&w=1105&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/a-winding-road-leads-through-lush-green-mountains-PPstLCdo964" target="_blank">
+            <img id="img17" src="https://images.unsplash.com/photo-1750022097061-15f47c5c2166?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/colored-pencils-arranged-in-a-circular-pattern-4P-3eMramR8" target="_blank">
+            <img id="img18" src="https://images.unsplash.com/photo-1755003266098-8133982d324b?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/a-seagull-flies-gracefully-through-a-cloudy-blue-sky-YEbN7RVOLsk" target="_blank">
+            <img id="img19" src="https://images.unsplash.com/photo-1756071793540-89145c08f8af?q=80&w=670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/new-york-city-skyline-across-the-water-NnJnnneQy6Q" target="_blank">
+            <img id="img20" src="https://images.unsplash.com/photo-1756072768892-cfb072e9d148?q=80&w=1733&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/suspension-bridge-over-a-wide-river-with-forested-hills-eIdhrqP5Wuo" target="_blank">
+            <img id="img21" src="https://images.unsplash.com/photo-1756073052176-7a194fb8d02d?q=80&w=2116&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/a-fountain-firework-exploding-against-a-black-background-4EgCE2ZOXv4" target="_blank">
+            <img id="img22" src="https://images.unsplash.com/photo-1761066644935-14551e47af49?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        <a class="gallery-photo" href="https://unsplash.com/photos/calm-lake-reflecting-a-dark-blue-and-orange-twilight-sky-tXOpDAtCEZ0" target="_blank">
+            <img id="img23" src="https://images.unsplash.com/photo-1761880403573-4f6f8438bbe7?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 6">
+        </a>
+        
+
+    </div>
+
+    <!-- Full-screen drawer (same markup/behavior as index.html) with Photography submenu -->
+    <div id="myNav" class="overlay" aria-hidden="true">
+        <button class="closebtn" aria-label="Close menu" onclick="closeNav()">&times;</button>
+        <div class="overlay-content" role="navigation" aria-label="Main menu">
+            <a href="index.html" onclick="closeNav()">Home</a>
+            <a href="projects.html" onclick="closeNav()">Projects</a>
+
+            <div class="submenu" id="photographySubmenu">
+                <!-- Use an anchor for keyboard/focus semantics; toggle behavior added in JS for touch -->
+                <a href="photo.html" class="submenu-toggle" id="submenuToggle" aria-expanded="false" aria-controls="submenuList">Photography ▾</a>
+                <div class="submenu-list" id="submenuList" aria-hidden="true">
+                    <a href="photo.html" onclick="closeNav()">Gallery</a>
+                    <a href="photoshop.html" onclick="closeNav()">Photoshop Tutorials</a>
+                </div>
+            </div>
+
+            <a href="contact.html" onclick="closeNav()">About Me</a>
+        </div>
+    </div>
+
     <script>
         // Wait for all images to load before initializing magnifier
         function onImagesLoaded(container, callback) {
@@ -318,25 +409,60 @@
             });
         });
 
-        // Side menu code
-        const openBtn = document.getElementById('openMenuBtn');
-        const closeBtn = document.getElementById('closeMenuBtn');
-        const sideMenu = document.getElementById('sideMenu');
-        const overlay = document.getElementById('sideMenuOverlay');
+        // Drawer functions (copied from index.html behavior)
+        function openNav() {
+            const nav = document.getElementById("myNav");
+            if (!nav) return;
+            nav.style.width = "100%";
+            nav.setAttribute("aria-hidden", "false");
+            document.body.classList.add("overlay-open");
+        }
+        function closeNav() {
+            const nav = document.getElementById("myNav");
+            if (!nav) return;
+            nav.style.width = "0%";
+            nav.setAttribute("aria-hidden", "true");
+            document.body.classList.remove("overlay-open");
 
-        openBtn.addEventListener('click', function (e) {
-            e.preventDefault();
-            sideMenu.classList.add('open');
-            overlay.classList.add('open');
+            // reset submenu state
+            const submenu = document.getElementById('photographySubmenu');
+            if (submenu) submenu.classList.remove('open');
+            const toggle = document.getElementById('submenuToggle');
+            const list = document.getElementById('submenuList');
+            if (toggle) toggle.setAttribute('aria-expanded', 'false');
+            if (list) list.setAttribute('aria-hidden', 'true');
+        }
+
+        // Accessibility: close on Escape
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeNav();
         });
-        closeBtn.addEventListener('click', function () {
-            sideMenu.classList.remove('open');
-            overlay.classList.remove('open');
+
+        // Close drawer when clicking on the overlay background
+        document.getElementById('myNav').addEventListener('click', function (e) {
+            if (e.target === this) closeNav();
         });
-        overlay.addEventListener('click', function () {
-            sideMenu.classList.remove('open');
-            overlay.classList.remove('open');
-        });
+
+        // Submenu toggle for touch devices / explicit control
+        (function () {
+            const submenu = document.getElementById('photographySubmenu');
+            const toggle = document.getElementById('submenuToggle');
+            const list = document.getElementById('submenuList');
+
+            if (!toggle || !submenu) return;
+
+            toggle.addEventListener('click', function (e) {
+                // On touch / small screens toggle submenu instead of navigating immediately
+                if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
+                    e.preventDefault();
+                    const isOpen = submenu.classList.toggle('open');
+                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                } else {
+                    // On pointer devices allow the Photography link to navigate to gallery
+                }
+            });
+        })();
     </script>
 </body>
 </html>
