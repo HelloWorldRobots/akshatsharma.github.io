@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -329,9 +328,9 @@
         <div class="project-card hoverable">
             <div class="project-title">Smart Assistive Cane for Elderly/Disabled Individuals</div>
             <ul>
-            <li>Automatically detects extreme tilt when "Walking mode" switched on using thumb joystick and alerts surroundings with buzzer and led</li>
-            <li>Contains a servo driven claw assembly inside the stick to help grab hard to reach items using linear pinion </li>
-            <li>1:5 Model was made for demonstration powered by a 9V battery</li>
+                <li>Automatically detects extreme tilt when "Walking mode" switched on using thumb joystick and alerts surroundings with buzzer and led</li>
+                <li>Contains a servo driven claw assembly inside the stick to help grab hard to reach items using linear pinion </li>
+                <li>1:5 Model was made for demonstration powered by a 9V battery</li>
             </ul>
             <a class="project-link" href="#" target="_blank" aria-label="View Smart Assistive Cane details">View Project Details and Pictures Here!</a>
         </div>
@@ -365,11 +364,11 @@
         </div>
 
         <div class="project-card hoverable">
-            <div class="project-title">RP2040‑Based Tracking Tag - IN DEV JUNE 26</div
+            <div class="project-title">RP2040‑Based Tracking Tag - IN DEV JUNE 26</div>
             <ul>
-            <li>Arduino RP2040 Connect used with BLE to connect with phone </li>
-            <li>When multiple movement detected without the user device nearby, the tag will beep to alert surroundings and deter theft</li>
-            <li>Short form factor design with a compact battery for easy attachment to items like keys, bags, or bikes</li>
+                <li>Arduino RP2040 Connect used with BLE to connect with phone </li>
+                <li>When multiple movement detected without the user device nearby, the tag will beep to alert surroundings and deter theft</li>
+                <li>Short form factor design with a compact battery for easy attachment to items like keys, bags, or bikes</li>
             </ul>
             <a class="project-link" href="#" target="_blank" aria-label="View Tracking Tag details">View Project Details and Pictures Here!</a>
         </div>
@@ -409,92 +408,97 @@
             <div class="project-desc">Athletes and Elderly individuals usually get injured or sprained easily while doing excercise or day-to-day work. This brace is a cheap and effective alternative to the high-cost medical market while remaining comfortable and user-friendly</div>
             <a class="project-link" href="#" target="_blank" aria-label="View details">View Project Details and Pictures Here!</a>
         </div>
+
+        <!-- Fixed: ensure each project-card is a sibling, not nested -->
         <div class="project-card hoverable">
             <div class="project-title">Autonomous Library Sorter and Helper Robot - In Dev</div>
-            <div class="project-desc"><div>This robot is a demo for a larger scale robot, that sorts textbooks in a library setting and places them on their according shelf, while also providing general help and information using AI to people seeking help in the library regarding book choice or summaries</div>
-            <a class="project-link" href="#" target="_blank" aria-label="View details">View Project Details and Pictures Here!</a>
-        </div>
-        <div class = "project-card hoverable">
-            <div class = "project-title">FIR-Ledger (Police report ledger)</div>
-            <div class = "project-desc"><div> Developed a PWA front-end (Progressive Web App) using HTML, CSS, JS and JSON for tracking police complaints and FIR progress using hashed audit trails. The goal is to reduce FIR stalling and increase transparency by creating an auditable chain of complaints and progress updates. Worked in a team of 4 project submitted for STEMINATE Hacakthon 2026 </div>
+            <div class="project-desc">
+                <div>This robot is a demo for a larger scale robot, that sorts textbooks in a library setting and places them on their according shelf, while also providing general help and information using AI to people seeking help in the library regarding book choice or summaries</div>
+            </div>
             <a class="project-link" href="#" target="_blank" aria-label="View details">View Project Details and Pictures Here!</a>
         </div>
 
-    </div>
+        <div class="project-card hoverable">
+            <div class="project-title">FIR-Ledger (Police report ledger)</div>
+            <div class="project-desc">
+                <div> Developed a PWA front-end (Progressive Web App) using HTML, CSS, JS and JSON for tracking police complaints and FIR progress using hashed audit trails. The goal is to reduce FIR stalling and increase transparency by creating an auditable chain of complaints and progress updates. Worked in a team of 4 project submitted for STEMINATE Hacakthon 2026 </div>
+            </div>
+            <a class="project-link" href="#" target="_blank" aria-label="View details">View Project Details and Pictures Here!</a>
+        </div>
 
-    <!-- Drawer (exact structure used by photo.html) -->
-    <div id="myNav" class="overlay" aria-hidden="true">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <!-- Drawer (exact structure used by photo.html) -->
+            <div id="myNav" class="overlay" aria-hidden="true">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
-        <div class="overlay-content" role="navigation" aria-label="Main menu">
-            <a href="index.html" onclick="closeNav()">Home</a>
-            <a href="projects.html" onclick="closeNav()">Projects</a>
+                <div class="overlay-content" role="navigation" aria-label="Main menu">
+                    <a href="index.html" onclick="closeNav()">Home</a>
+                    <a href="projects.html" onclick="closeNav()">Projects</a>
 
-            <div class="submenu" id="photographySubmenu">
-                <a href="photo.html" class="submenu-toggle" id="submenuToggle" aria-expanded="false" aria-controls="submenuList">Photography ▾</a>
-                <div class="submenu-list" id="submenuList" aria-hidden="true">
-                    <a href="photo.html" onclick="closeNav()">Gallery</a>
-                    <a href="photoshop.html" onclick="closeNav()">Photoshop Tutorials</a>
+                    <div class="submenu" id="photographySubmenu">
+                        <a href="photo.html" class="submenu-toggle" id="submenuToggle" aria-expanded="false" aria-controls="submenuList">Photography ▾</a>
+                        <div class="submenu-list" id="submenuList" aria-hidden="true">
+                            <a href="photo.html" onclick="closeNav()">Gallery</a>
+                            <a href="photoshop.html" onclick="closeNav()">Photoshop Tutorials</a>
+                        </div>
+                    </div>
+
+                    <a href="contact.html" onclick="closeNav()">About Me</a>
                 </div>
             </div>
 
-            <a href="contact.html" onclick="closeNav()">About Me</a>
-        </div>
-    </div>
-
-    <script>
-        function openNav() {
-            const nav = document.getElementById("myNav");
-            if (!nav) return;
-            nav.style.width = "100%";
-            nav.setAttribute("aria-hidden", "false");
-            document.body.classList.add("overlay-open");
-        }
-        function closeNav() {
-            const nav = document.getElementById("myNav");
-            if (!nav) return;
-            nav.style.width = "0%";
-            nav.setAttribute("aria-hidden", "true");
-            document.body.classList.remove("overlay-open");
-
-            // reset submenu state like photo.html
-            const submenu = document.getElementById('photographySubmenu');
-            if (submenu) submenu.classList.remove('open');
-            const toggle = document.getElementById('submenuToggle');
-            const list = document.getElementById('submenuList');
-            if (toggle) toggle.setAttribute('aria-expanded', 'false');
-            if (list) list.setAttribute('aria-hidden', 'true');
-        }
-
-        // Accessibility: close drawer on Esc
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape') closeNav();
-        });
-
-        // Close drawer when clicking outside overlay content
-        document.getElementById('myNav').addEventListener('click', function (e) {
-            if (e.target === this) closeNav();
-        });
-
-        // Submenu toggle for touch devices / explicit control (matches photo.html)
-        (function () {
-            const submenu = document.getElementById('photographySubmenu');
-            const toggle = document.getElementById('submenuToggle');
-            const list = document.getElementById('submenuList');
-
-            if (!toggle || !submenu) return;
-
-            toggle.addEventListener('click', function (e) {
-                if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
-                    e.preventDefault();
-                    const isOpen = submenu.classList.toggle('open');
-                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                    list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-                } else {
-                    // On pointer devices allow the Photography link to navigate to gallery
+            <script>
+                function openNav() {
+                    const nav = document.getElementById("myNav");
+                    if (!nav) return;
+                    nav.style.width = "100%";
+                    nav.setAttribute("aria-hidden", "false");
+                    document.body.classList.add("overlay-open");
                 }
-            });
-        })();
-    </script>
+                function closeNav() {
+                    const nav = document.getElementById("myNav");
+                    if (!nav) return;
+                    nav.style.width = "0%";
+                    nav.setAttribute("aria-hidden", "true");
+                    document.body.classList.remove("overlay-open");
+
+                    // reset submenu state like photo.html
+                    const submenu = document.getElementById('photographySubmenu');
+                    if (submenu) submenu.classList.remove('open');
+                    const toggle = document.getElementById('submenuToggle');
+                    const list = document.getElementById('submenuList');
+                    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+                    if (list) list.setAttribute('aria-hidden', 'true');
+                }
+
+                // Accessibility: close drawer on Esc
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') closeNav();
+                });
+
+                // Close drawer when clicking outside overlay content
+                document.getElementById('myNav').addEventListener('click', function (e) {
+                    if (e.target === this) closeNav();
+                });
+
+                // Submenu toggle for touch devices / explicit control (matches photo.html)
+                (function () {
+                    const submenu = document.getElementById('photographySubmenu');
+                    const toggle = document.getElementById('submenuToggle');
+                    const list = document.getElementById('submenuList');
+
+                    if (!toggle || !submenu) return;
+
+                    toggle.addEventListener('click', function (e) {
+                        if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
+                            e.preventDefault();
+                            const isOpen = submenu.classList.toggle('open');
+                            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                            list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                        } else {
+                            // On pointer devices allow the Photography link to navigate to gallery
+                        }
+                    });
+                })();
+            </script>
 </body>
 </html>
