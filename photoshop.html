@@ -178,7 +178,6 @@
                 transform: scale(1.06)
             }
 
-        /* modal player */
         .player-modal {
             position: fixed;
             inset: 0;
@@ -278,7 +277,6 @@
             opacity: 0.95
         }
 
-        /* Drawer - match index/photo exactly */
         body.overlay-open {
             overflow: hidden
         }
@@ -434,7 +432,6 @@
         <footer class="page-footer">All tutorials embedded via YouTube — © Akshat Sharma</footer>
     </main>
 
-    <!-- Modal player -->
     <div id="playerModal" class="player-modal" role="dialog" aria-hidden="true" aria-label="Video player">
         <div class="player-frame" role="document">
             <div class="player-header">
@@ -448,7 +445,7 @@
         </div>
     </div>
 
-    <!-- Drawer (exact drawbar markup as in photo.html) -->
+ 
     <div id="myNav" class="overlay" aria-hidden="true">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <div class="overlay-content" role="navigation" aria-label="Main menu">
@@ -468,7 +465,7 @@
     </div>
 
     <script>
-        // Drawer handlers (matching photo.html / index.html)
+     
         function openNav() {
             const nav = document.getElementById('myNav');
             if (!nav) return;
@@ -491,14 +488,14 @@
             if (list) list.setAttribute('aria-hidden', 'true');
         }
 
-        // close on Esc
+        
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') { closeNav(); closePlayer(); }
         });
-        // click outside
+ 
         document.getElementById('myNav').addEventListener('click', function (e) { if (e.target === this) closeNav(); });
 
-        // Player modal logic (unchanged)
+      
         const modal = document.getElementById('playerModal');
         const iframe = document.getElementById('playerIframe');
         const openOnYouTube = document.getElementById('openOnYouTube');
@@ -522,7 +519,7 @@
         document.getElementById('closePlayer').addEventListener('click', closePlayer);
         modal.addEventListener('click', function (e) { if (e.target === modal) closePlayer(); });
 
-        // thumbnail wiring
+  
         document.querySelectorAll('.video-card').forEach(function (card) {
             const videoId = card.getAttribute('data-video');
             const play = card.querySelector('.thumb-play');
@@ -534,7 +531,7 @@
             card.querySelector('.thumb-wrap').addEventListener('click', activate);
         });
 
-        // submenu toggle for touch devices (same behavior as photo.html)
+     
         (function () {
             const submenu = document.getElementById('photographySubmenu');
             const toggle = document.getElementById('submenuToggle');
@@ -547,7 +544,7 @@
                     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                     list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
                 } else {
-                    // allow navigation on pointer devices
+                   
                 }
             });
         })();
