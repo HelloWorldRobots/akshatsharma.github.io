@@ -13,7 +13,7 @@
             min-height: 100vh;
         }
 
-        /* Hamburger open button (matches index.html / photo.html) */
+
         .open-btn {
             position: fixed;
             top: 20px;
@@ -123,7 +123,7 @@
             }
         }
 
-        /* Ensure titles and descriptions never show underlines and inherit color */
+ 
         .project-title {
             font-size: 1.4rem;
             font-weight: bold;
@@ -141,7 +141,6 @@
             color: inherit;
         }
 
-        /* the only clickable element inside the card */
         .project-link {
             margin-top: auto;
             color: #04AA6D;
@@ -159,7 +158,7 @@
                 text-decoration: underline;
             }
 
-        /* make hover effects available when pointer present, without making whole card clickable */
+
         @media (hover: hover) and (pointer: fine) {
             .project-card.hoverable {
                 cursor: pointer;
@@ -189,7 +188,7 @@
             }
         }
 
-        /* --- Drawer - make it identical to photo.html drawbar --- */
+  
         body.overlay-open {
             overflow: hidden;
         }
@@ -220,7 +219,7 @@
             padding: 0 12px;
         }
 
-        /* Use same selectors as photo.html for consistent behavior */
+        
         .overlay a,
         .overlay .submenu-toggle {
             padding: 8px;
@@ -242,7 +241,7 @@
                 transform: translateY(-2px);
             }
 
-        /* Photography submenu matches photo.html */
+     
         .submenu {
             width: 100%;
             max-width: 520px;
@@ -276,7 +275,7 @@
                 color: #fff;
             }
 
-        /* Make closebtn rule SPECIFIC and placed after generic .overlay a so it won't be overridden */
+      
         .overlay a.closebtn {
             position: absolute;
             top: 20px;
@@ -288,8 +287,8 @@
             border: none;
             cursor: pointer;
             padding: 0 12px;
-            width: auto; /* don't let generic .overlay a width:100% center it */
-            text-align: right; /* keep symbol aligned to the right edge */
+            width: auto; 
+            text-align: right; 
         }
 
         @media screen and (max-height: 450px) {
@@ -303,11 +302,11 @@
                     right: 35px;
                 }
         }
-        /* --- end overlay styles --- */
+
     </style>
 </head>
 <body>
-    <!-- Open button matches other pages -->
+
     <button class="open-btn" onclick="openNav()" aria-label="Open menu" title="Open menu">
         <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" role="img" fill="currentColor">
             <rect y="7" width="32" height="3" rx="1.5" />
@@ -426,7 +425,6 @@
             <a class="project-link" href="#" target="_blank" aria-label="View details">View Project Details and Pictures Here!</a>
         </div>
 
-            <!-- Drawer (exact structure used by photo.html) -->
             <div id="myNav" class="overlay" aria-hidden="true">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -461,7 +459,7 @@
                     nav.setAttribute("aria-hidden", "true");
                     document.body.classList.remove("overlay-open");
 
-                    // reset submenu state like photo.html
+
                     const submenu = document.getElementById('photographySubmenu');
                     if (submenu) submenu.classList.remove('open');
                     const toggle = document.getElementById('submenuToggle');
@@ -470,17 +468,17 @@
                     if (list) list.setAttribute('aria-hidden', 'true');
                 }
 
-                // Accessibility: close drawer on Esc
+               
                 document.addEventListener('keydown', function (e) {
                     if (e.key === 'Escape') closeNav();
                 });
 
-                // Close drawer when clicking outside overlay content
+              
                 document.getElementById('myNav').addEventListener('click', function (e) {
                     if (e.target === this) closeNav();
                 });
 
-                // Submenu toggle for touch devices / explicit control (matches photo.html)
+             
                 (function () {
                     const submenu = document.getElementById('photographySubmenu');
                     const toggle = document.getElementById('submenuToggle');
@@ -495,7 +493,7 @@
                             toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                             list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
                         } else {
-                            // On pointer devices allow the Photography link to navigate to gallery
+                            
                         }
                     });
                 })();
