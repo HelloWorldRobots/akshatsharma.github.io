@@ -44,7 +44,7 @@
                 color: #04AA6D;
             }
 
-        /* Full-screen overlay / drawer (same behavior as index.html) */
+        
         .overlay {
             height: 100%;
             width: 0;
@@ -103,7 +103,7 @@
                 transform: translateY(-2px);
             }
 
-        /* Submenu styles */
+       
         .submenu {
             display: flex;
             flex-direction: column;
@@ -146,7 +146,7 @@
             }
         }
 
-        /* Gallery + magnifier styles kept from original */
+       
         .gallery {
             column-count: 3;
             column-gap: 24px;
@@ -223,7 +223,7 @@
     </style>
 </head>
 <body>
-    <!-- Open button now opens the same full-screen drawer used on index.html -->
+   
     <button class="open-btn" onclick="openNav()" aria-label="Open menu" title="Open menu">
         <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" role="img">
             <rect y="7" width="32" height="3" rx="1.5" />
@@ -243,7 +243,6 @@
             <img id="img3" src="https://images.unsplash.com/photo-1749071387246-92e125fd11da?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 3">
         </a>
       
-        <!-- Add more images as needed -->
         <a class="gallery-photo" href="https://unsplash.com/photos/decUmka7Tuk" target="_blank">
             <img id="img4" src="https://images.unsplash.com/photo-1779940405509-3b023a0f73ef?q=80&w=876&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sample 4">
         </a>
@@ -304,7 +303,7 @@
 
     </div>
 
-    <!-- Full-screen drawer (same markup/behavior as index.html) with Photography submenu -->
+  
     <div id="myNav" class="overlay" aria-hidden="true">
         <button class="closebtn" aria-label="Close menu" onclick="closeNav()">&times;</button>
         <div class="overlay-content" role="navigation" aria-label="Main menu">
@@ -325,7 +324,7 @@
     </div>
 
     <script>
-        // Wait for all images to load before initializing magnifier
+     
         function onImagesLoaded(container, callback) {
             const images = container.querySelectorAll('img');
             let loaded = 0;
@@ -402,14 +401,14 @@
             });
         }
 
-        // Initialize magnifier after all images are loaded
+      
         onImagesLoaded(document.querySelector('.gallery'), function () {
             document.querySelectorAll('.gallery-photo img').forEach(function (img) {
                 magnify(img, 2.5);
             });
         });
 
-        // Drawer functions (copied from index.html behavior)
+     
         function openNav() {
             const nav = document.getElementById("myNav");
             if (!nav) return;
@@ -424,7 +423,7 @@
             nav.setAttribute("aria-hidden", "true");
             document.body.classList.remove("overlay-open");
 
-            // reset submenu state
+          
             const submenu = document.getElementById('photographySubmenu');
             if (submenu) submenu.classList.remove('open');
             const toggle = document.getElementById('submenuToggle');
@@ -433,17 +432,17 @@
             if (list) list.setAttribute('aria-hidden', 'true');
         }
 
-        // Accessibility: close on Escape
+    
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeNav();
         });
 
-        // Close drawer when clicking on the overlay background
+      
         document.getElementById('myNav').addEventListener('click', function (e) {
             if (e.target === this) closeNav();
         });
 
-        // Submenu toggle for touch devices / explicit control
+      
         (function () {
             const submenu = document.getElementById('photographySubmenu');
             const toggle = document.getElementById('submenuToggle');
@@ -452,14 +451,14 @@
             if (!toggle || !submenu) return;
 
             toggle.addEventListener('click', function (e) {
-                // On touch / small screens toggle submenu instead of navigating immediately
+               
                 if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
                     e.preventDefault();
                     const isOpen = submenu.classList.toggle('open');
                     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                     list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
                 } else {
-                    // On pointer devices allow the Photography link to navigate to gallery
+                   
                 }
             });
         })();
