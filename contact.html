@@ -120,7 +120,7 @@
             }
         }
 
-        /* Drawer overlay styles — match photo.html drawbar exactly */
+    
         body.overlay-open {
             overflow: hidden;
         }
@@ -151,7 +151,7 @@
             padding: 0 12px;
         }
 
-        /* Generic overlay links and submenu toggle */
+    
         .overlay a,
         .overlay .submenu-toggle {
             padding: 8px;
@@ -173,7 +173,7 @@
                 transform: translateY(-2px);
             }
 
-        /* Submenu */
+   
         .submenu {
             width: 100%;
             max-width: 520px;
@@ -187,11 +187,11 @@
             gap: 8px;
             padding-left: 12px;
         }
-        /* show on hover for pointer devices */
+      
         .submenu:hover .submenu-list {
             display: flex;
         }
-        /* explicit open state (toggled on click for touch) */
+
         .submenu.open .submenu-list {
             display: flex;
         }
@@ -209,7 +209,7 @@
                 color: #fff;
             }
 
-        /* Make close control an anchor and ensure it isn't affected by the generic overlay a rules */
+     
         .overlay a.closebtn {
             position: absolute;
             top: 20px;
@@ -239,7 +239,7 @@
     </style>
 </head>
 <body>
-    <!-- Hamburger button opens drawer -->
+
     <button class="open-btn" onclick="openNav()" aria-label="Open menu" title="Open menu">
         <svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false" role="img" fill="currentColor">
             <rect y="7" width="32" height="3" rx="1.5" />
@@ -268,7 +268,7 @@
         </div>
     </div>
 
-    <!-- Drawer (structure matches photo.html) -->
+
     <div id="myNav" class="overlay" aria-hidden="true">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 
@@ -289,7 +289,7 @@
     </div>
 
     <script>
-        // Drawer open/close
+  
         function openNav() {
             const nav = document.getElementById("myNav");
             if (!nav) return;
@@ -312,31 +312,31 @@
             if (list) list.setAttribute('aria-hidden', 'true');
         }
 
-        // accessibility: Esc closes drawer
+
         document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape') closeNav();
         });
 
-        // click outside content closes drawer
+  
         document.getElementById('myNav').addEventListener('click', function (e) {
             if (e.target === this) closeNav();
         });
 
-        // submenu toggle for touch devices (matches photo.html)
+   
         (function () {
             const submenu = document.getElementById('photographySubmenu');
             const toggle = document.getElementById('submenuToggle');
             const list = document.getElementById('submenuList');
             if (!toggle) return;
             toggle.addEventListener('click', function (e) {
-                // On touch / small screens toggle submenu instead of navigating immediately
+                
                 if (window.matchMedia('(hover: none)').matches || window.innerWidth < 900) {
                     e.preventDefault();
                     const isOpen = submenu.classList.toggle('open');
                     toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                     list.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
                 } else {
-                    // On pointer devices allow the Photography link to navigate to gallery
+                   
                 }
             });
         })();
